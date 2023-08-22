@@ -21,6 +21,7 @@ const ViewReportPage = () => {
   const token = localStorage.getItem("token");
 
   const [reports, setReports] = useState();
+  const [filteredReports, setFilteredReports] = useState();
 
   const { register, handleSubmit } = useForm();
 
@@ -32,7 +33,6 @@ const ViewReportPage = () => {
         },
       })
       .then((res) => {
-
         setReports(res.data);
       });
   };
@@ -53,6 +53,8 @@ const ViewReportPage = () => {
   const createNewReport = () => {
     console.log("cria novo report");
   };
+
+  const openReport = () => {};
   return (
     <ContainerReportsPage>
       <LogoutArea onClick={logout}>
@@ -83,10 +85,14 @@ const ViewReportPage = () => {
       <ListReportsSection>
         <h2>Listagem de Relatórios</h2>
         <ul>
-          {reports &&
-            reports.map((r: any, i: number) => {
+          {reports?.length === 0 ? (
+            <li>
+              <h4>Ainda não há relatórios para esse cliente</h4>
+            </li>
+          ) : (
+            reports?.map((r: any, i: number) => {
               return (
-                <li key={i}>
+                <li key={i} onClick={openReport}>
                   <div>
                     <p>{r.title}</p>
                     <span>{r.subject}</span>
@@ -94,7 +100,8 @@ const ViewReportPage = () => {
                   <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
                 </li>
               );
-            })}
+            })
+          )}
         </ul>
       </ListReportsSection>
 
