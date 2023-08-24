@@ -5,17 +5,17 @@ import {
   CreateNewClientSection,
   Dialog,
   DialogSection,
+  FilterClientForm,
   ListOfClients,
-  LogoutArea,
 } from "./styles";
 import { useNavigate } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
 import { TfiEye } from "react-icons/tfi";
 import { IClient } from "../../interfaces";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { IoCreateOutline } from "react-icons/io5";
+import { Header } from "../../components/header";
 
 interface ICreateClient {
   name: string;
@@ -36,9 +36,18 @@ export const ViewClientsPage = () => {
   });
 
   const token = localStorage.getItem("token");
-  const [clients, setClients] = useState<IClient[]>();
+
+  const [clients, setClients] = useState<IClient[]>([]);
+  const [filteredClients, setFilteredClients] = useState<IClient[]>([]);
 
   const [createClient, setCreateClient] = useState(false);
+
+  const filterClients = (data: ICreateClient) => {
+    const filter = clients.filter((client) =>
+      client.name.toLowerCase().includes(data.name.toLowerCase())
+    );
+    setFilteredClients(filter);
+  };
 
   const getClients = () => {
     api
@@ -57,11 +66,6 @@ export const ViewClientsPage = () => {
     getClients();
   }, []);
 
-  const logout = () => {
-    localStorage.clear();
-    navigate(`/`);
-  };
-
   const createUser = (data: ICreateClient) => {
     console.log(data);
     const newClient = {
@@ -76,7 +80,7 @@ export const ViewClientsPage = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((res) => {
+      .then(() => {
         setCreateClient(false);
         getClients();
         toast.success("Usuário cadastrado com sucesso");
@@ -86,22 +90,28 @@ export const ViewClientsPage = () => {
       });
   };
 
-  const deleteUser = () => {};
-
   return (
     <ContainerClientsPage>
+      <Header title="CLIENTES" />
       <ToastContainer />
-      <LogoutArea onClick={logout}>
-        <BiLogOut />
-        <span>SAIR</span>
-      </LogoutArea>
 
-      <h1>LISTA DE CLIENTES</h1>
+      <FilterClientForm onSubmit={handleSubmit(filterClients)}>
+        <div>
+          <section>
+            <label>Buscar cliente:</label>
+            <input placeholder="Nome do cliente..." {...register("name")} />
+          </section>
+          <button type="submit">FILTRAR</button>
+        </div>
+        <button type="button" onClick={() => setFilteredClients([])}>
+          Limpar Filtro
+        </button>
+      </FilterClientForm>
+
       <ListOfClients>
-        {clients &&
-          clients.map((c: IClient, i: number) => {
-            return (
-              <>
+        {filteredClients.length > 0
+          ? filteredClients.map((c: IClient, i: number) => {
+              return (
                 <li
                   key={i}
                   onClick={() => navigate(`/reports/${c.id}/${c.name}`)}
@@ -115,6 +125,11 @@ export const ViewClientsPage = () => {
                   </p>
                   <TfiEye />
                 </li>
+              );
+            })
+          : clients
+          ? clients.map((c: IClient, i: number) => {
+              return (
                 <li
                   key={i}
                   onClick={() => navigate(`/reports/${c.id}/${c.name}`)}
@@ -128,9 +143,9 @@ export const ViewClientsPage = () => {
                   </p>
                   <TfiEye />
                 </li>
-              </>
-            );
-          })}
+              );
+            })
+          : "AINDA NÃO HÁ CLIENTES"}
       </ListOfClients>
 
       <CreateNewClientSection>

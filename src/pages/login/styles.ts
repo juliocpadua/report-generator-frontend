@@ -10,6 +10,10 @@ export const ContainerLogin = styled.div`
   > img {
     width: 70%;
     height: 250px;
+
+    @media (min-width: 824px) {
+      width: 20%;
+    }
   }
 `;
 
@@ -22,6 +26,10 @@ export const FormLogin = styled.form`
 
   min-height: 50vh;
   width: 70%;
+
+  @media (min-width: 824px) {
+    width: 25%;
+  }
 
   padding: 20px;
   border-radius: 10px;
@@ -46,5 +54,8 @@ export const FormLogin = styled.form`
 
     border-radius: 10px;
     margin-top: 20px;
+
+    outline: 0;
+    border: none;
   }
 `;

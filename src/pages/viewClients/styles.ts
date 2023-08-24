@@ -8,16 +8,11 @@ export const ContainerClientsPage = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
-  > h1 {
-    font-family: var(--font-main);
-    color: var(--brown);
-    font-weight: bold;
-  }
 `;
 
 export const ListOfClients = styled.ul`
-  max-height: 70vh;
+  height: 65vh;
+  max-height: 65vh;
   width: 95vw;
 
   overflow-y: scroll;
@@ -83,14 +78,6 @@ export const ListOfClients = styled.ul`
 
     cursor: pointer;
   }
-`;
-
-export const LogoutArea = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  cursor: pointer;
 `;
 
 export const CreateNewClientSection = styled.section`
@@ -219,6 +206,83 @@ export const Dialog = styled.dialog`
       padding-inline-start: 10px;
       border: 1px solid var(--pakistan-green);
       color: var(--pakistan-green);
+    }
+  }
+`;
+
+export const FilterClientForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  width: 100vw;
+
+  > button {
+    background-color: transparent;
+    border: none;
+    outline: 0;
+
+    font-family: var(--font-main);
+    color: var(--tigers-eye);
+    font-weight: bold;
+    font-size: 14px;
+    letter-spacing: 1px;
+
+    text-decoration: underline;
+  }
+
+  > div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 25px;
+    width: 100%;
+
+    padding-inline: 30px;
+
+    > button {
+      height: 35px;
+
+      font-family: var(--font-main);
+      color: var(--cornsilk);
+      font-weight: bold;
+      font-size: 14px;
+      letter-spacing: 1px;
+
+      background-color: var(--tigers-eye);
+
+      padding: 5px;
+
+      border: none;
+      outline: 0;
+      border-radius: 5px;
+    }
+
+    > section {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      > input {
+        width: 100%;
+        font-family: var(--font-main);
+        color: var(--brown);
+        font-weight: bold;
+        font-size: 14px;
+        padding-inline-start: 10px;
+        height: 35px;
+
+        box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+        -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+        -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      }
+
+      > label {
+        font-family: var(--font-main);
+        color: var(--brown);
+        font-weight: bold;
+        font-size: 16px;
+      }
     }
   }
 `;

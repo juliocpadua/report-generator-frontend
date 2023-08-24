@@ -26,6 +26,15 @@ export interface IReportRequest {
   client_id?: string;
 }
 
+export interface IReportExibition {
+  title: string;
+  generationDate: string;
+  description: string;
+  img?: string[];
+  subject: string;
+  id?: string;
+}
+
 export interface IReportPDFQuery {
   client_id?: string;
 }
@@ -36,4 +45,9 @@ export interface IAdminRequest {
   email: string;
   password: string;
   isAdm: boolean;
+}
+
+export interface IFunctionFilterReport {
+  text: string;
+  date: string;
 }
