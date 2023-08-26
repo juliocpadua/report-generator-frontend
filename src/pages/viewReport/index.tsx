@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, redirect } from "react-router-dom";
 import api from "../../services";
 import { useEffect, useState } from "react";
 import {
@@ -21,6 +21,7 @@ import { GoTrash } from "react-icons/go";
 import { Header } from "../../components/header";
 import { DialogSection } from "../viewClients/styles";
 import { ToastContainer, toast } from "react-toastify";
+import { BsFiletypePdf } from "react-icons/bs";
 
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
@@ -34,7 +35,16 @@ const ViewReportPage = () => {
   const [openReport, setOpenReport] = useState(false);
   const [currentReport, setCurrentReport] = useState<IReportExibition>({});
   const [confirm, setConfirm] = useState(false);
-  const [newReport, setNewReport] = useState(false);
+
+  // states para gerar pdf
+  const [currentDate, setCurrentDate] = useState("");
+  console.log(currentDate);
+  const [currentSubject, setCurrentSubject] = useState("");
+  console.log(currentSubject);
+  const [currentTitle, setCurrentTitle] = useState("");
+  console.log(currentTitle);
+
+  const [pdfUrl, setPdfUrl] = useState("");
 
   const { register, handleSubmit } = useForm();
 
@@ -50,23 +60,60 @@ const ViewReportPage = () => {
       });
   };
 
+  const pdfUrlGenerate = () => {
+    const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+
+    if (currentDate === "" && currentSubject === "" && currentSubject === "") {
+      return setPdfUrl(basePdfUrl);
+    }
+
+    if (currentDate !== "" && currentSubject === "" && currentTitle === "") {
+      return setPdfUrl(`${basePdfUrl}?date=${currentDate}`);
+    }
+
+    if (currentDate !== "" && currentSubject !== "" && currentTitle === "") {
+      return setPdfUrl(
+        `${basePdfUrl}?date=${currentDate}&subject=${currentSubject}`
+      );
+    }
+
+    if (currentDate !== "" && currentSubject === "" && currentTitle !== "") {
+      return setPdfUrl(
+        `${basePdfUrl}?date=${currentDate}&title=${currentTitle}`
+      );
+    }
+
+    if (currentDate === "" && currentSubject !== "" && currentTitle === "") {
+      return setPdfUrl(`${basePdfUrl}?subject=${currentSubject}`);
+    }
+
+    if (currentDate === "" && currentTitle !== "" && currentSubject === "") {
+      return setPdfUrl(`${basePdfUrl}?title=${currentTitle}`);
+    }
+  };
+
   useEffect(() => {
     getReports();
+    pdfUrlGenerate();
   }, []);
 
   const filterReports = (data: IFunctionFilterReport) => {
+    pdfUrlGenerate();
     if (data.date !== "") {
       const filterByDate = reports?.filter(
         (r) => dayjs(r.generationDate).format("YYYY-MM") === data.date
       );
 
       setFilteredReports(filterByDate);
+      setCurrentDate(data.date);
 
       if (data.text !== "") {
         const filterByText = filterByDate?.filter((report) => {
           if (report.subject !== "") {
+            setCurrentSubject(data.text);
             return report.subject.toLowerCase() === data.text.toLowerCase();
           } else if (report.title !== "") {
+            setCurrentTitle(data.text);
             return report.title.toLowerCase() === data.text.toLowerCase();
           }
         });
@@ -80,20 +127,40 @@ const ViewReportPage = () => {
 
       if (filterBySubject.length > 0) {
         setFilteredReports(filterBySubject);
+        setCurrentSubject(data.text);
       } else {
         const filterByTitle = reports?.filter((report) =>
           report.title.toLowerCase().includes(data.text.toLowerCase())
         );
         setFilteredReports(filterByTitle);
+        setCurrentTitle(data.text);
       }
     }
   };
 
-  const createNewReport = () => {
-    console.log("cria novo report");
+  const deleteClient = () => {
+    if (reports.length > 0) {
+      return toast.error(
+        "Você precisa excluir todos os Relatórios do Cliente antes de excluí-lo."
+      );
+    } else {
+      api
+        .delete(`/clients/${client_id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          toast.success("Cliente excluído com sucesso!");
+          setTimeout(() => {
+            navigate("/clients");
+          }, 2000);
+        })
+        .catch(() => {
+          toast.error("Não foi possível excluir esse Cliente");
+        });
+    }
   };
-
-  const deleteClient = () => {};
 
   const deleteReport = (id: string) => {
     setConfirm(false);
@@ -191,6 +258,9 @@ const ViewReportPage = () => {
             })
           )}
         </ul>
+        <a href={pdfUrl} target="blank">
+          GERAR PDF <BsFiletypePdf />
+        </a>
       </ListReportsSection>
 
       <ActionsSection>
@@ -212,10 +282,12 @@ const ViewReportPage = () => {
       {openReport && (
         <DialogSection>
           <DialogReport open>
-            <p onClick={() => setOpenReport(false)}>X</p>
+            <p className="close" onClick={() => setOpenReport(false)}>
+              X
+            </p>
             <section>
               <h3>PIMENTA E TAVEIRA</h3>
-              <p className="date">
+              <p className="subtitle-2">
                 Consultoria Agronômica e Assistência Técnica Especializada em
                 Cafeicultura
               </p>
@@ -235,17 +307,20 @@ const ViewReportPage = () => {
                   return <img key={i} src={url} />;
                 })}
               </div>
-
-              <p onClick={() => setConfirm(true)}>
-                EXCLUIR RELATÓRIO <GoTrash />
-              </p>
             </section>
+
+            <p className="exclude-report" onClick={() => setConfirm(true)}>
+              EXCLUIR RELATÓRIO <GoTrash />
+            </p>
 
             {confirm && (
               <dialog open>
                 <p>Tem certeza que deseja excluir esse relatório?</p>
                 <div>
-                  <span onClick={() => deleteReport(currentReport.id!)}>
+                  <span
+                    className="yes"
+                    onClick={() => deleteReport(currentReport.id!)}
+                  >
                     SIM
                   </span>
                   <span onClick={() => setConfirm(false)}>NÃO</span>

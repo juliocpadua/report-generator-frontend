@@ -16,15 +16,36 @@ import { ToastContainer, toast } from "react-toastify";
 import { v4 as uuidv4 } from "uuid";
 import { IoCreateOutline } from "react-icons/io5";
 import { Header } from "../../components/header";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface ICreateClient {
   name: string;
 }
 
 export const ViewClientsPage = () => {
+  const ClientSchema = z.object({
+    name: z.string().nonempty("Nome obrigadtório!"),
+    email: z.string().nonempty("Email obrigadtório!"),
+    password: z.string().min(6, "A senha precisa ter mais de 6 caracteres."),
+    city: z.string().nonempty("Cidade obrigadtória!"),
+    state: z.string().nonempty("Estado obrigadtório!"),
+    postal_code: z.string().nonempty("CEP obrigadtório!"),
+    address: z.string().nonempty("Endereço obrigadtório!"),
+    phone_number: z.string().nonempty("Telefone obrigadtório!"),
+  });
+
+  type CreateUserFormData = z.infer<typeof ClientSchema>;
+
   const navigate = useNavigate();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<CreateUserFormData>({
+    resolver: zodResolver(ClientSchema),
+  });
 
   useEffect(() => {
     function Redirection() {
@@ -67,7 +88,6 @@ export const ViewClientsPage = () => {
   }, []);
 
   const createUser = (data: ICreateClient) => {
-    console.log(data);
     const newClient = {
       ...data,
       isAdm: false,
@@ -166,6 +186,7 @@ export const ViewClientsPage = () => {
                 placeholder="Nome do cliente..."
                 {...register("name")}
               />
+              {errors.name && <span>{errors.name.message}</span>}
 
               <label>Email:</label>
               <input
@@ -173,6 +194,7 @@ export const ViewClientsPage = () => {
                 placeholder="Ex. cliente@gmail.com"
                 {...register("email")}
               />
+              {errors.email && <span>{errors.email.message}</span>}
 
               <label>Senha:</label>
               <input
@@ -180,6 +202,7 @@ export const ViewClientsPage = () => {
                 placeholder="Senha do cliente..."
                 {...register("password")}
               />
+              {errors.password && <span>{errors.password.message}</span>}
 
               <label>Cidade:</label>
               <input
@@ -187,6 +210,7 @@ export const ViewClientsPage = () => {
                 placeholder="Cidade do cliente..."
                 {...register("city")}
               />
+              {errors.city && <span>{errors.city.message}</span>}
 
               <label>Estado:</label>
               <input
@@ -194,6 +218,7 @@ export const ViewClientsPage = () => {
                 placeholder="Ex. SP, PR, MG"
                 {...register("state")}
               />
+              {errors.state && <span>{errors.state.message}</span>}
 
               <label>CEP:</label>
               <input
@@ -201,6 +226,7 @@ export const ViewClientsPage = () => {
                 placeholder="Ex. 14.706-205"
                 {...register("postal_code")}
               />
+              {errors.postal_code && <span>{errors.postal_code.message}</span>}
 
               <label>Endereço:</label>
               <input
@@ -208,6 +234,7 @@ export const ViewClientsPage = () => {
                 placeholder="Rua, número e complemento..."
                 {...register("address")}
               />
+              {errors.address && <span>{errors.address.message}</span>}
 
               <label>Telefone:</label>
               <input
@@ -215,6 +242,9 @@ export const ViewClientsPage = () => {
                 placeholder="Ex. 035991234567"
                 {...register("phone_number")}
               />
+              {errors.phone_number && (
+                <span>{errors.phone_number.message}</span>
+              )}
 
               <button type="submit">CADASTRAR</button>
             </form>

@@ -77,6 +77,14 @@ export const FormReport = styled.form`
       font-weight: bold;
     }
 
+    > span {
+      font-family: var(--font-main);
+      color: #86180f;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 3px;
+    }
+
     > input {
       width: 100%;
       font-family: var(--font-main);
@@ -85,9 +93,13 @@ export const FormReport = styled.form`
     }
 
     > textarea {
-      max-width: 350px;
+      max-width: 100%;
       min-width: 350px;
       min-height: 300px;
+
+      @media (min-width: 824px) {
+        min-width: 100%;
+      }
     }
 
     > textarea,

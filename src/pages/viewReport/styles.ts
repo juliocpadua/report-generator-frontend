@@ -84,6 +84,14 @@ export const ListReportsSection = styled.section`
     font-size: 22px;
   }
 
+  > p {
+    font-family: var(--font-main);
+    color: var(--brown);
+    font-weight: bold;
+    letter-spacing: 1px;
+    font-size: 22px;
+  }
+
   > ul {
     min-height: 100%;
     min-width: 95%;
@@ -265,14 +273,34 @@ export const DialogReport = styled.dialog`
 
   position: fixed;
   width: 92vw;
-  min-height: 75vh;
+  min-height: 85vh;
   height: auto;
+  max-height: 98vh;
+  overflow-y: scroll;
   padding: 5px;
+
+  &::-webkit-scrollbar {
+    width: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--cornsilk);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dark-moss-green);
+    border-radius: 20px;
+    border: 2px solid var(--dark-moss-green);
+    border-radius: 10px;
+    opacity: 0.5;
+  }
+
+  /* max-height: 95vh; */
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   gap: 25px;
 
   border: none;
@@ -284,7 +312,22 @@ export const DialogReport = styled.dialog`
 
   inset-inline-start: 5%;
 
-  > p {
+  .exclude-report {
+    font-size: 12px;
+    font-family: var(--font-main);
+    font-weight: bold;
+    letter-spacing: 1px;
+
+    padding: 5px;
+    border-radius: 5px;
+
+    background-color: #86180f;
+    color: var(--cornsilk);
+
+    cursor: pointer;
+  }
+
+  > .close {
     font-family: var(--font-main);
     color: var(--cornsilk);
     font-weight: bold;
@@ -299,14 +342,13 @@ export const DialogReport = styled.dialog`
     padding: 5px;
     background-color: var(--brown);
     border-radius: 100%;
+    margin-top: 25%;
 
     cursor: pointer;
 
     @media (min-width: 824px) {
       margin-top: 0px;
     }
-
-    margin-top: -50px;
   }
 
   > section {
@@ -314,15 +356,17 @@ export const DialogReport = styled.dialog`
     flex-direction: column;
     gap: 5px;
 
+
     > div {
-      max-width: 95%;
+      max-width: 100%;
       display: flex;
       flex-direction: row;
       align-items: center;
       justify-content: center;
       gap: 10%;
+
       > img {
-        max-width: 70px;
+        max-width: 90px;
 
         @media (min-width: 824px) {
           max-width: 150px;
@@ -341,7 +385,7 @@ export const DialogReport = styled.dialog`
     > p {
       color: #5a5658;
       font-weight: bold;
-      font-size: 9px;
+      font-size: 14px;
 
       @media (min-width: 824px) {
         font-size: 14px;
@@ -354,6 +398,15 @@ export const DialogReport = styled.dialog`
       font-weight: bold;
       font-size: 18px;
       color: #003c00;
+    }
+
+    .subtitle-2 {
+      color: #5a5658;
+
+      text-align: center;
+      font-family: var(--font-main);
+      font-weight: bold;
+      font-size: 14px;
     }
 
     .title,
@@ -378,9 +431,6 @@ export const DialogReport = styled.dialog`
       font-weight: bold;
       font-size: 16px;
     }
-
-    .description {
-    }
   }
 
   > dialog {
@@ -398,7 +448,7 @@ export const DialogReport = styled.dialog`
 
     background-color: var(--pakistan-green);
     color: var(--cornsilk);
-    border-radius: 20px;
+    border-radius: 10px;
 
     font-family: var(--font-main);
 
@@ -407,6 +457,22 @@ export const DialogReport = styled.dialog`
       gap: 20px;
       align-items: center;
       justify-content: center;
+
+      > span {
+        border-radius: 2px;
+
+        width: 50px;
+        height: 25px;
+
+        background-color: var(--dark-moss-green);
+
+        letter-spacing: 1px;
+        cursor: pointer;
+      }
+
+      .yes {
+        background-color: #86180f;
+      }
     }
   }
 `;

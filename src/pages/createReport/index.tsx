@@ -5,9 +5,27 @@ import { v4 as uuidv4 } from "uuid";
 import api from "../../services";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const CreateReportPage = () => {
-  const { handleSubmit, register, reset } = useForm();
+  const ReportSchema = z.object({
+    title: z.string().nonempty("Título obrigatório!"),
+    subject: z.string().nonempty("Assunto obrigatório!"),
+    description: z.string().nonempty("Descrição obrigatória!"),
+    photo: z.instanceof(FileList),
+  });
+
+  type CreateReportSchema = z.infer<typeof ReportSchema>;
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<CreateReportSchema>({
+    resolver: zodResolver(ReportSchema),
+  });
 
   const { client_id } = useParams();
 
@@ -64,6 +82,7 @@ const CreateReportPage = () => {
             placeholder="Digite aqui o título do relatório..."
             {...register("title")}
           />
+          {errors.title && <span>{errors.title.message}</span>}
         </div>
 
         <div>
@@ -73,6 +92,7 @@ const CreateReportPage = () => {
             placeholder="Digite aqui o assunto do relatório..."
             {...register("subject")}
           />
+          {errors.subject && <span>{errors.subject.message}</span>}
         </div>
 
         <div>
@@ -81,6 +101,7 @@ const CreateReportPage = () => {
             placeholder="Descreva aqui o relatório..."
             {...register("description")}
           />
+          {errors.description && <span>{errors.description.message}</span>}
         </div>
 
         <div>
@@ -91,6 +112,7 @@ const CreateReportPage = () => {
             multiple
             {...register("photo")}
           />
+          {errors.photo && <span>{errors.photo.message}</span>}
         </div>
 
         <button type="submit">CRIAR</button>

@@ -179,8 +179,34 @@ export const Dialog = styled.dialog`
 
     min-width: 100%;
 
+    max-height: 85vh;
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--cornsilk);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--dark-moss-green);
+      border-radius: 20px;
+      border: 2px solid var(--dark-moss-green);
+      border-radius: 10px;
+      opacity: 0.5;
+    }
+
+    > span {
+      font-family: var(--font-main);
+      font-weight: bold;
+      font-size: 12px;
+      color: #86180f;
+    }
+
     > button {
-      margin-top: 5%;
+      margin-top: 2%;
       padding: 5px;
 
       border: none;
