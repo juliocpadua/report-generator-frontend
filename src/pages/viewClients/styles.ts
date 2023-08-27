@@ -71,6 +71,11 @@ export const ListOfClients = styled.ul`
     }
 
     > p {
+      max-width: 200px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      
       > span {
         color: var(--pakistan-green);
       }

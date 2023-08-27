@@ -1,12 +1,14 @@
-import { useNavigate, useParams, redirect } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services";
 import { useEffect, useState } from "react";
 import {
   ActionsSection,
   ContainerReportsPage,
   CreateNewActionSection,
+  DialogClient,
   DialogReport,
   FilterSection,
+  GeneratePDF,
   ListReportsSection,
 } from "./styles";
 import dayjs from "dayjs";
@@ -26,6 +28,8 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
+  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
@@ -35,18 +39,11 @@ const ViewReportPage = () => {
   const [openReport, setOpenReport] = useState(false);
   const [currentReport, setCurrentReport] = useState<IReportExibition>({});
   const [confirm, setConfirm] = useState(false);
+  const [deleteClient, setDeleteClient] = useState(false);
 
-  // states para gerar pdf
-  const [currentDate, setCurrentDate] = useState("");
-  console.log(currentDate);
-  const [currentSubject, setCurrentSubject] = useState("");
-  console.log(currentSubject);
-  const [currentTitle, setCurrentTitle] = useState("");
-  console.log(currentTitle);
+  const [pdfUrl, setPdfUrl] = useState(basePdfUrl);
 
-  const [pdfUrl, setPdfUrl] = useState("");
-
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const getReports = () => {
     api
@@ -60,60 +57,26 @@ const ViewReportPage = () => {
       });
   };
 
-  const pdfUrlGenerate = () => {
-    const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
-
-    if (currentDate === "" && currentSubject === "" && currentSubject === "") {
-      return setPdfUrl(basePdfUrl);
-    }
-
-    if (currentDate !== "" && currentSubject === "" && currentTitle === "") {
-      return setPdfUrl(`${basePdfUrl}?date=${currentDate}`);
-    }
-
-    if (currentDate !== "" && currentSubject !== "" && currentTitle === "") {
-      return setPdfUrl(
-        `${basePdfUrl}?date=${currentDate}&subject=${currentSubject}`
-      );
-    }
-
-    if (currentDate !== "" && currentSubject === "" && currentTitle !== "") {
-      return setPdfUrl(
-        `${basePdfUrl}?date=${currentDate}&title=${currentTitle}`
-      );
-    }
-
-    if (currentDate === "" && currentSubject !== "" && currentTitle === "") {
-      return setPdfUrl(`${basePdfUrl}?subject=${currentSubject}`);
-    }
-
-    if (currentDate === "" && currentTitle !== "" && currentSubject === "") {
-      return setPdfUrl(`${basePdfUrl}?title=${currentTitle}`);
-    }
-  };
-
   useEffect(() => {
     getReports();
-    pdfUrlGenerate();
   }, []);
 
   const filterReports = (data: IFunctionFilterReport) => {
-    pdfUrlGenerate();
     if (data.date !== "") {
       const filterByDate = reports?.filter(
         (r) => dayjs(r.generationDate).format("YYYY-MM") === data.date
       );
 
       setFilteredReports(filterByDate);
-      setCurrentDate(data.date);
+      setPdfUrl(`${basePdfUrl}?date=${data.date}`);
 
       if (data.text !== "") {
         const filterByText = filterByDate?.filter((report) => {
           if (report.subject !== "") {
-            setCurrentSubject(data.text);
+            setPdfUrl(`${basePdfUrl}?date=${data.date}&subject=${data.text}`);
             return report.subject.toLowerCase() === data.text.toLowerCase();
           } else if (report.title !== "") {
-            setCurrentTitle(data.text);
+            setPdfUrl(`${basePdfUrl}?date=${data.date}&title=${data.text}`);
             return report.title.toLowerCase() === data.text.toLowerCase();
           }
         });
@@ -127,18 +90,18 @@ const ViewReportPage = () => {
 
       if (filterBySubject.length > 0) {
         setFilteredReports(filterBySubject);
-        setCurrentSubject(data.text);
+        setPdfUrl(`${basePdfUrl}?subject=${data.text}`);
       } else {
         const filterByTitle = reports?.filter((report) =>
           report.title.toLowerCase().includes(data.text.toLowerCase())
         );
         setFilteredReports(filterByTitle);
-        setCurrentTitle(data.text);
+        setPdfUrl(`${basePdfUrl}?title=${data.text}`);
       }
     }
   };
 
-  const deleteClient = () => {
+  const deleteClientFunction = () => {
     if (reports.length > 0) {
       return toast.error(
         "Você precisa excluir todos os Relatórios do Cliente antes de excluí-lo."
@@ -205,7 +168,10 @@ const ViewReportPage = () => {
           <button
             className="clean"
             type="button"
-            onClick={() => setFilteredReports([])}
+            onClick={() => {
+              setPdfUrl(basePdfUrl);
+              setFilteredReports([]);
+            }}
           >
             Limpar Filtro
           </button>
@@ -258,9 +224,9 @@ const ViewReportPage = () => {
             })
           )}
         </ul>
-        <a href={pdfUrl} target="blank">
+        <GeneratePDF href={pdfUrl} target="blank">
           GERAR PDF <BsFiletypePdf />
-        </a>
+        </GeneratePDF>
       </ListReportsSection>
 
       <ActionsSection>
@@ -273,11 +239,25 @@ const ViewReportPage = () => {
 
         <CreateNewActionSection>
           <h3>Deletar cliente</h3>
-          <span onClick={deleteClient} className="delete">
+          <span onClick={() => setDeleteClient(true)} className="delete">
             DELETAR <GoTrash />
           </span>
         </CreateNewActionSection>
       </ActionsSection>
+
+      {deleteClient && (
+        <DialogSection>
+          <DialogClient open>
+            <p>Tem certeza que deseja excluir esse Cliente?</p>
+            <div>
+              <span className="yes" onClick={deleteClientFunction}>
+                SIM
+              </span>
+              <span onClick={() => setDeleteClient(false)}>NÃO</span>
+            </div>
+          </DialogClient>
+        </DialogSection>
+      )}
 
       {openReport && (
         <DialogSection>

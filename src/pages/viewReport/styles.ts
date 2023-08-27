@@ -9,7 +9,7 @@ export const ContainerReportsPage = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  gap: 30px;
+  gap: 15px;
 `;
 
 export const ActionsSection = styled.section`
@@ -356,7 +356,6 @@ export const DialogReport = styled.dialog`
     flex-direction: column;
     gap: 5px;
 
-
     > div {
       max-width: 100%;
       display: flex;
@@ -475,4 +474,74 @@ export const DialogReport = styled.dialog`
       }
     }
   }
+`;
+
+export const DialogClient = styled.dialog`
+  border: none;
+  padding: 40px;
+  inset-inline-start: 10%;
+
+  width: 80%;
+
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  background-color: var(--pakistan-green);
+  color: var(--cornsilk);
+  border-radius: 10px;
+
+  font-family: var(--font-main);
+
+  @media (min-width: 824px) {
+    width: 50%;
+    inset-inline-start: 25%;
+    font-size: 18px;
+  }
+
+  > div {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+
+    > span {
+      border-radius: 2px;
+
+      width: 50px;
+      height: 25px;
+
+      background-color: var(--dark-moss-green);
+
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .yes {
+      background-color: #86180f;
+    }
+  }
+`;
+
+export const GeneratePDF = styled.a`
+  text-decoration: none;
+
+  font-family: var(--font-main);
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  background-color: var(--dark-moss-green);
+  color: var(--cornsilk);
+  padding-inline: 1.5rem;
+  border-radius: 5px;
+
+  cursor: pointer;
 `;

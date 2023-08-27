@@ -15,7 +15,7 @@ export const FormReport = styled.form`
 
   height: 85vh;
   width: 95vw;
-  margin-top: 5%;
+  margin-top: 3%;
 
   max-height: 90vh;
   overflow-y: scroll;

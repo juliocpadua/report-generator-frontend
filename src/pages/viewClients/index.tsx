@@ -62,12 +62,13 @@ export const ViewClientsPage = () => {
   const [filteredClients, setFilteredClients] = useState<IClient[]>([]);
 
   const [createClient, setCreateClient] = useState(false);
+  const [clientName, setClientName] = useState("");
 
-  const filterClients = (data: ICreateClient) => {
+  const filterClients = (data: string) => {
     const filter = clients.filter((client) =>
-      client.name.toLowerCase().includes(data.name.toLowerCase())
+      client.name.toLowerCase().includes(data.toLowerCase())
     );
-    setFilteredClients(filter);
+    return setFilteredClients(filter);
   };
 
   const getClients = () => {
@@ -115,15 +116,28 @@ export const ViewClientsPage = () => {
       <Header title="CLIENTES" />
       <ToastContainer />
 
-      <FilterClientForm onSubmit={handleSubmit(filterClients)}>
+      <FilterClientForm>
         <div>
           <section>
             <label>Buscar cliente:</label>
-            <input placeholder="Nome do cliente..." {...register("name")} />
+            <input
+              placeholder="Nome do cliente..."
+              name="client-name"
+              value={clientName}
+              onChange={(e) => setClientName(e.target.value)}
+            />
           </section>
-          <button type="submit">FILTRAR</button>
+          <button type="button" onClick={() => filterClients(clientName)}>
+            FILTRAR
+          </button>
         </div>
-        <button type="button" onClick={() => setFilteredClients([])}>
+        <button
+          type="button"
+          onClick={() => {
+            setFilteredClients([]);
+            setClientName("");
+          }}
+        >
           Limpar Filtro
         </button>
       </FilterClientForm>
