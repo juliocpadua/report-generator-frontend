@@ -267,7 +267,7 @@ export const DialogReport = styled.dialog`
   @media (min-width: 824px) {
     width: 55vw;
     height: 95vh;
-    justify-content: space-around;
+    justify-content: space-between;
     inset-inline-start: 22%;
   }
 
@@ -277,7 +277,7 @@ export const DialogReport = styled.dialog`
   height: auto;
   max-height: 98vh;
   overflow-y: scroll;
-  padding: 5px;
+  padding: 10px;
 
   &::-webkit-scrollbar {
     width: 3px;
@@ -300,7 +300,7 @@ export const DialogReport = styled.dialog`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 25px;
 
   border: none;
@@ -342,7 +342,6 @@ export const DialogReport = styled.dialog`
     padding: 5px;
     background-color: var(--brown);
     border-radius: 100%;
-    margin-top: 25%;
 
     cursor: pointer;
 

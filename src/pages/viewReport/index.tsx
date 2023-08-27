@@ -43,7 +43,7 @@ const ViewReportPage = () => {
 
   const [pdfUrl, setPdfUrl] = useState(basePdfUrl);
 
-  const { register, handleSubmit, reset } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const getReports = () => {
     api
@@ -265,6 +265,7 @@ const ViewReportPage = () => {
             <p className="close" onClick={() => setOpenReport(false)}>
               X
             </p>
+            
             <section>
               <h3>PIMENTA E TAVEIRA</h3>
               <p className="subtitle-2">

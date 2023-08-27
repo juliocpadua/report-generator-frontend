@@ -34,6 +34,10 @@ export const HeaderComponent = styled.header`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    @media (min-width: 824px) {
+      max-width: min-content;
+    }
   }
 
   > button {
