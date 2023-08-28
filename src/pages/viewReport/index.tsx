@@ -276,15 +276,15 @@ const ViewReportPage = () => {
             </section>
 
             <section>
-              <h2 className="title">{currentReport.title}</h2>
+              <h2 className="title">{currentReport!.title}</h2>
               <p className="date">
-                {dayjs(currentReport.generationDate).format("DD/MM/YYYY")}
+                {dayjs(currentReport!.generationDate).format("DD/MM/YYYY")}
               </p>
-              <span className="subject">{currentReport.subject}</span>
-              <p className="description">{currentReport.description}</p>
+              <span className="subject">{currentReport!.subject}</span>
+              <p className="description">{currentReport!.description}</p>
 
               <div>
-                {currentReport.img?.map((url: string, i: number) => {
+                {currentReport!.img?.map((url: string, i: number) => {
                   return <img key={i} src={url} />;
                 })}
               </div>
@@ -300,7 +300,7 @@ const ViewReportPage = () => {
                 <div>
                   <span
                     className="yes"
-                    onClick={() => deleteReport(currentReport.id!)}
+                    onClick={() => deleteReport(currentReport!.id!)}
                   >
                     SIM
                   </span>
