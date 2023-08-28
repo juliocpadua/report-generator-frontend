@@ -28,7 +28,7 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
@@ -37,13 +37,13 @@ const ViewReportPage = () => {
   const [reports, setReports] = useState<IReportRequest[]>([]);
   const [filteredReports, setFilteredReports] = useState<IReportRequest[]>([]);
   const [openReport, setOpenReport] = useState(false);
-  const [currentReport, setCurrentReport] = useState<IReportExibition>({});
+  const [currentReport, setCurrentReport] = useState<IReportExibition>();
   const [confirm, setConfirm] = useState(false);
   const [deleteClient, setDeleteClient] = useState(false);
 
   const [pdfUrl, setPdfUrl] = useState(basePdfUrl);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<IFunctionFilterReport>();
 
   const getReports = () => {
     api
@@ -61,23 +61,23 @@ const ViewReportPage = () => {
     getReports();
   }, []);
 
-  const filterReports = (data: IFunctionFilterReport) => {
-    if (data.date !== "") {
+  const filterReports = ({ date, text }: IFunctionFilterReport) => {
+    if (date !== "") {
       const filterByDate = reports?.filter(
-        (r) => dayjs(r.generationDate).format("YYYY-MM") === data.date
+        (r) => dayjs(r.generationDate).format("YYYY-MM") === date
       );
 
       setFilteredReports(filterByDate);
-      setPdfUrl(`${basePdfUrl}?date=${data.date}`);
+      setPdfUrl(`${basePdfUrl}?date=${date}`);
 
-      if (data.text !== "") {
+      if (text !== "") {
         const filterByText = filterByDate?.filter((report) => {
           if (report.subject !== "") {
-            setPdfUrl(`${basePdfUrl}?date=${data.date}&subject=${data.text}`);
-            return report.subject.toLowerCase() === data.text.toLowerCase();
+            setPdfUrl(`${basePdfUrl}?date=${date}&subject=${text}`);
+            return report.subject.toLowerCase() === text.toLowerCase();
           } else if (report.title !== "") {
-            setPdfUrl(`${basePdfUrl}?date=${data.date}&title=${data.text}`);
-            return report.title.toLowerCase() === data.text.toLowerCase();
+            setPdfUrl(`${basePdfUrl}?date=${date}&title=${text}`);
+            return report.title.toLowerCase() === text.toLowerCase();
           }
         });
 
@@ -85,18 +85,18 @@ const ViewReportPage = () => {
       }
     } else {
       const filterBySubject = reports?.filter((report) =>
-        report.subject.toLowerCase().includes(data.text.toLowerCase())
+        report.subject.toLowerCase().includes(text.toLowerCase())
       );
 
       if (filterBySubject.length > 0) {
         setFilteredReports(filterBySubject);
-        setPdfUrl(`${basePdfUrl}?subject=${data.text}`);
+        setPdfUrl(`${basePdfUrl}?subject=${text}`);
       } else {
         const filterByTitle = reports?.filter((report) =>
-          report.title.toLowerCase().includes(data.text.toLowerCase())
+          report.title.toLowerCase().includes(text.toLowerCase())
         );
         setFilteredReports(filterByTitle);
-        setPdfUrl(`${basePdfUrl}?title=${data.text}`);
+        setPdfUrl(`${basePdfUrl}?title=${text}`);
       }
     }
   };
@@ -265,7 +265,7 @@ const ViewReportPage = () => {
             <p className="close" onClick={() => setOpenReport(false)}>
               X
             </p>
-            
+
             <section>
               <h3>PIMENTA E TAVEIRA</h3>
               <p className="subtitle-2">
