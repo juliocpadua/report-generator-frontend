@@ -89,6 +89,7 @@ export const ViewClientsPage = () => {
   }, []);
 
   const createUser = (data: ICreateClient) => {
+    toast.loading("Criando cadastro do cliente.");
     const newClient = {
       ...data,
       isAdm: false,
@@ -102,11 +103,13 @@ export const ViewClientsPage = () => {
         },
       })
       .then(() => {
+        toast.dismiss();
         setCreateClient(false);
         getClients();
         toast.success("Usuário cadastrado com sucesso");
       })
       .catch((err) => {
+        toast.dismiss();
         toast.error(err.message);
       });
   };

@@ -17,9 +17,11 @@ const Login = () => {
   const navigate = useNavigate();
 
   const createSession = (data: object) => {
+    toast.loading("Aguarde, fazendo login...");
     api
       .post("/admin/login", data)
       .then((res) => {
+        toast.dismiss();
         const resToken = res.data;
 
         localStorage.setItem("token", resToken);
@@ -29,6 +31,7 @@ const Login = () => {
         }
       })
       .catch(() => {
+        toast.dismiss();
         return toast.error("Email e/ou senha incorretos.");
       });
   };

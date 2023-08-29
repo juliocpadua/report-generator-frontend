@@ -62,8 +62,8 @@ const CreateReportPage = () => {
         reset();
       })
       .catch(() => {
-        toast.error("Não foi possível criar esse relatório!");
         toast.dismiss();
+        toast.error("Não foi possível criar esse relatório!");
       });
   };
 
