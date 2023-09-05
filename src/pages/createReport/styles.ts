@@ -119,5 +119,9 @@ export const FormReport = styled.form`
       -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
       -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
     }
+
+    > p {
+      cursor: pointer;
+    }
   }
 `;

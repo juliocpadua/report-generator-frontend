@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const CreateReportPage = () => {
   const ReportSchema = z.object({
@@ -30,6 +31,8 @@ const CreateReportPage = () => {
   const { client_id } = useParams();
 
   const token = localStorage.getItem("token");
+
+  const [containTable, setContainTable] = useState(false);
 
   const createNewReport = (data: any) => {
     toast.loading("Gerando relatório...");
@@ -65,6 +68,71 @@ const CreateReportPage = () => {
         toast.dismiss();
         toast.error("Não foi possível criar esse relatório!");
       });
+  };
+
+
+  //table=====================
+
+  const initialRow = Array(2).fill("");
+  const [tableData, setTableData] = useState([initialRow]);
+  console.log(tableData);
+  const [numRows, setNumRows] = useState(1);
+  const [numCols, setNumCols] = useState(2);
+
+  const addRow = () => {
+    setTableData((prevData) => {
+      const newData = [...prevData, Array(numCols).fill("")];
+      return newData;
+    });
+    setNumRows(numRows + 1);
+  };
+
+  const addColumn = () => {
+    setTableData((prevData) => {
+      const newData = prevData.map((row) => [...row, ""]);
+      return newData;
+    });
+    setNumCols(numCols + 1);
+  };
+
+  const updateCellValue = (rowIndex, colIndex, newValue) => {
+    const updatedData = [...tableData];
+    updatedData[rowIndex][colIndex] = newValue;
+    setTableData(updatedData);
+  };
+
+  const renderTable = () => {
+    const tableRows = [];
+    for (let i = 0; i < numRows; i++) {
+      const rowCells = [];
+      for (let j = 0; j < numCols; j++) {
+        rowCells.push(
+          j === 0 ? (
+            <th key={j}>
+              <input
+                type="text"
+                value={tableData[i]?.[j] || ""}
+                onChange={(e) => updateCellValue(i, j, e.target.value)}
+              />
+            </th>
+          ) : (
+            <td key={j}>
+              <input
+                type="text"
+                value={tableData[i]?.[j] || ""}
+                onChange={(e) => updateCellValue(i, j, e.target.value)}
+              />
+            </td>
+          )
+        );
+      }
+      tableRows.push(<tr key={i}>{rowCells}</tr>);
+    }
+    return (
+      <table>
+        <tbody>{tableRows}</tbody>
+      </table>
+    );
   };
 
   return (
@@ -113,6 +181,17 @@ const CreateReportPage = () => {
             {...register("photo")}
           />
           {errors.photo && <span>{errors.photo.message}</span>}
+        </div>
+
+        <div>
+          <p onClick={() => setContainTable(true)}>ADICIONAR TABELA +</p>
+          {containTable && (
+            <div>
+              <button onClick={addRow}>Adicionar Linha</button>
+              <button onClick={addColumn}>Adicionar Coluna</button>
+              {renderTable()}
+            </div>
+          )}
         </div>
 
         <button type="submit">CRIAR</button>

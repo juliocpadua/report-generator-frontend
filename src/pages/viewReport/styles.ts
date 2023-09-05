@@ -149,7 +149,12 @@ export const ListReportsSection = styled.section`
       -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
 
       > div {
-        max-width: 200px;
+        width: auto;
+
+        @media (max-width: 824px) {
+          max-width: 200px;
+        }
+
         > p {
           font-family: var(--font-main);
           color: var(--brown);
@@ -157,20 +162,25 @@ export const ListReportsSection = styled.section`
           font-weight: bold;
           font-size: 18px;
 
-          max-width: 150px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          @media (max-width: 824px) {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
-        > span {
+
+        .subject {
           font-family: var(--font-main);
           color: var(--pakistan-green);
           letter-spacing: 1px;
 
-          max-width: 150px;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          @media (max-width: 824px) {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
         }
       }
 

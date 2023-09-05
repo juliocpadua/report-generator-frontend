@@ -28,7 +28,8 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  // const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
@@ -191,7 +192,7 @@ const ViewReportPage = () => {
                 <li key={i} onClick={() => setOpenReport(!openReport)}>
                   <div>
                     <p>{r.title}</p>
-                    <span>{r.subject}</span>
+                    <p className="subject">{r.subject}</p>
                   </div>
                   <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
                 </li>
@@ -216,7 +217,7 @@ const ViewReportPage = () => {
                 >
                   <div>
                     <p>{r.title}</p>
-                    <span>{r.subject}</span>
+                    <p className="subject">{r.subject}</p>
                   </div>
                   <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
                 </li>
