@@ -1,6 +1,11 @@
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/header";
-import { ContainerFormReport, FormReport } from "./styles";
+import {
+  ContainerFormReport,
+  FormReport,
+  SectionTable,
+  SectionTitlesTable,
+} from "./styles";
 import { v4 as uuidv4 } from "uuid";
 import api from "../../services";
 import { useParams } from "react-router-dom";
@@ -15,6 +20,7 @@ const CreateReportPage = () => {
     subject: z.string().nonempty("Assunto obrigatório!"),
     description: z.string().nonempty("Descrição obrigatória!"),
     photo: z.instanceof(FileList),
+    generationDate: z.string().nonempty("Data necessária."),
   });
 
   type CreateReportSchema = z.infer<typeof ReportSchema>;
@@ -33,6 +39,12 @@ const CreateReportPage = () => {
   const token = localStorage.getItem("token");
 
   const [containTable, setContainTable] = useState(false);
+  const initialRow = Array(2).fill("");
+  const [tableData, setTableData] = useState([initialRow]);
+  const [titleTable, setTitleTable] = useState<string>("");
+  const [descriptionTable, setDescriptionTable] = useState<string>("");
+  const [numRows, setNumRows] = useState(1);
+  const [numCols, setNumCols] = useState(2);
 
   const createNewReport = (data: any) => {
     toast.loading("Gerando relatório...");
@@ -43,8 +55,12 @@ const CreateReportPage = () => {
       title: data.title,
       subject: data.subject,
       description: data.description,
+      generationDate: data.generationDate,
       id: uuidv4(),
+      table: tableData,
     };
+
+    console.log(newData);
 
     dataForm.append("data", JSON.stringify(newData));
 
@@ -70,14 +86,7 @@ const CreateReportPage = () => {
       });
   };
 
-
   //table=====================
-
-  const initialRow = Array(2).fill("");
-  const [tableData, setTableData] = useState([initialRow]);
-  console.log(tableData);
-  const [numRows, setNumRows] = useState(1);
-  const [numCols, setNumCols] = useState(2);
 
   const addRow = () => {
     setTableData((prevData) => {
@@ -95,7 +104,7 @@ const CreateReportPage = () => {
     setNumCols(numCols + 1);
   };
 
-  const updateCellValue = (rowIndex, colIndex, newValue) => {
+  const updateCellValue = (rowIndex: any, colIndex: any, newValue: any) => {
     const updatedData = [...tableData];
     updatedData[rowIndex][colIndex] = newValue;
     setTableData(updatedData);
@@ -154,6 +163,16 @@ const CreateReportPage = () => {
         </div>
 
         <div>
+          <label>Data:</label>
+          <input
+            type="date"
+            placeholder="Escolha a data do relatório"
+            {...register("generationDate")}
+          />
+          {errors.title && <span>{errors.title.message}</span>}
+        </div>
+
+        <div>
           <label>Assunto:</label>
           <input
             type="text"
@@ -186,11 +205,31 @@ const CreateReportPage = () => {
         <div>
           <p onClick={() => setContainTable(true)}>ADICIONAR TABELA +</p>
           {containTable && (
-            <div>
-              <button onClick={addRow}>Adicionar Linha</button>
-              <button onClick={addColumn}>Adicionar Coluna</button>
+            <SectionTable>
+              <SectionTitlesTable>
+                <label>Título da Tabela:</label>
+                <input
+                  className="input-table"
+                  type="text"
+                  placeholder="Digite um título para a tabela..."
+                  onChange={(e) => setTitleTable(e.target.value)}
+                />
+                <label>Descrição da Tabela:</label>
+                <input
+                  className="input-table desc"
+                  type="text"
+                  placeholder="Digite uma descrição para a tabela..."
+                  onChange={(e) => setDescriptionTable(e.target.value)}
+                />
+              </SectionTitlesTable>
+              <button type="button" onClick={addRow}>
+                Adicionar Linha
+              </button>
+              <button type="button" onClick={addColumn}>
+                Adicionar Coluna
+              </button>
               {renderTable()}
-            </div>
+            </SectionTable>
           )}
         </div>
 

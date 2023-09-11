@@ -28,8 +28,8 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  // const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
-  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  //const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
@@ -189,7 +189,20 @@ const ViewReportPage = () => {
           ) : filteredReports.length > 0 ? (
             filteredReports.map((r: IReportRequest, i: number) => {
               return (
-                <li key={i} onClick={() => setOpenReport(!openReport)}>
+                <li
+                  key={i}
+                  onClick={() => {
+                    setCurrentReport({
+                      title: r.title,
+                      subject: r.subject,
+                      generationDate: r.generationDate,
+                      description: r.description,
+                      img: r.img,
+                      id: r.id,
+                    });
+                    setOpenReport(!openReport);
+                  }}
+                >
                   <div>
                     <p>{r.title}</p>
                     <p className="subject">{r.subject}</p>

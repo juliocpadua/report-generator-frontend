@@ -1,5 +1,37 @@
 import { styled } from "styled-components";
 
+export const SectionTable = styled.section``;
+
+export const SectionTitlesTable = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .input-table {
+    width: 250px;
+    padding: 0px;
+    padding-inline: 5px;
+
+    font-size: 14px;
+  }
+
+  .desc {
+    width: 300px;
+    font-size: 14px;
+  }
+
+  > label {
+    color: var(--brown);
+
+    font-family: var(--font-main);
+    font-weight: bold;
+  }
+`;
+
 export const ContainerFormReport = styled.div`
   display: flex;
   flex-direction: column;
