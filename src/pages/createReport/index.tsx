@@ -1,8 +1,10 @@
 import { useForm } from "react-hook-form";
 import { Header } from "../../components/header";
 import {
+  AddTableButton,
   ContainerFormReport,
   FormReport,
+  InputTable,
   SectionTable,
   SectionTitlesTable,
 } from "./styles";
@@ -58,9 +60,9 @@ const CreateReportPage = () => {
       generationDate: data.generationDate,
       id: uuidv4(),
       table: tableData,
+      title_table: titleTable,
+      description_table: descriptionTable,
     };
-
-    console.log(newData);
 
     dataForm.append("data", JSON.stringify(newData));
 
@@ -118,7 +120,7 @@ const CreateReportPage = () => {
         rowCells.push(
           j === 0 ? (
             <th key={j}>
-              <input
+              <InputTable
                 type="text"
                 value={tableData[i]?.[j] || ""}
                 onChange={(e) => updateCellValue(i, j, e.target.value)}
@@ -126,7 +128,7 @@ const CreateReportPage = () => {
             </th>
           ) : (
             <td key={j}>
-              <input
+              <InputTable
                 type="text"
                 value={tableData[i]?.[j] || ""}
                 onChange={(e) => updateCellValue(i, j, e.target.value)}
@@ -203,7 +205,7 @@ const CreateReportPage = () => {
         </div>
 
         <div>
-          <p onClick={() => setContainTable(true)}>ADICIONAR TABELA +</p>
+          <AddTableButton type="button" onClick={() => setContainTable(true)}>ADICIONAR TABELA +</AddTableButton>
           {containTable && (
             <SectionTable>
               <SectionTitlesTable>
@@ -223,10 +225,10 @@ const CreateReportPage = () => {
                 />
               </SectionTitlesTable>
               <button type="button" onClick={addRow}>
-                Adicionar Linha
+                LINHA +
               </button>
               <button type="button" onClick={addColumn}>
-                Adicionar Coluna
+                COLUNA +
               </button>
               {renderTable()}
             </SectionTable>

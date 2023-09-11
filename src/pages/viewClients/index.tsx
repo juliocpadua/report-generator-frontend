@@ -26,7 +26,7 @@ interface ICreateClient {
 export const ViewClientsPage = () => {
   const ClientSchema = z.object({
     name: z.string().nonempty("Nome obrigadtório!"),
-    email: z.string().nonempty("Email obrigadtório!"),
+    username: z.string().nonempty("Usuário obrigadtório!"),
     password: z.string().min(6, "A senha precisa ter mais de 6 caracteres."),
     city: z.string().nonempty("Cidade obrigadtória!"),
     state: z.string().nonempty("Estado obrigadtório!"),
@@ -64,6 +64,8 @@ export const ViewClientsPage = () => {
   const [createClient, setCreateClient] = useState(false);
   const [clientName, setClientName] = useState("");
 
+  const [adminId, setAdminId] = useState<string>("");
+
   const filterClients = (data: string) => {
     const filter = clients.filter((client) =>
       client.name.toLowerCase().includes(data.toLowerCase())
@@ -71,9 +73,27 @@ export const ViewClientsPage = () => {
     return setFilteredClients(filter);
   };
 
-  const getClients = () => {
+  const getDataAdmin = () => {
     api
-      .get("/clients", {
+      .get("/login/admin", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        getClients(res.data.id);
+        setAdminId(res.data.id);
+      })
+      .catch((err) => console.error(err));
+  };
+
+  useEffect(() => {
+    getDataAdmin();
+  }, []);
+
+  const getClients = (admin_id: string) => {
+    api
+      .get(`/clients/${admin_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,10 +104,6 @@ export const ViewClientsPage = () => {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    getClients();
-  }, []);
-
   const createUser = (data: ICreateClient) => {
     toast.loading("Criando cadastro do cliente.");
     const newClient = {
@@ -97,7 +113,7 @@ export const ViewClientsPage = () => {
     };
 
     api
-      .post("/clients", newClient, {
+      .post(`/clients/${adminId}`, newClient, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,7 +121,7 @@ export const ViewClientsPage = () => {
       .then(() => {
         toast.dismiss();
         setCreateClient(false);
-        getClients();
+        getClients(adminId);
         toast.success("Usuário cadastrado com sucesso");
       })
       .catch((err) => {
@@ -205,13 +221,13 @@ export const ViewClientsPage = () => {
               />
               {errors.name && <span>{errors.name.message}</span>}
 
-              <label>Email:</label>
+              <label>Usuário:</label>
               <input
                 type="text"
-                placeholder="Ex. cliente@gmail.com"
-                {...register("email")}
+                placeholder="Ex. nomedeusuário"
+                {...register("username")}
               />
-              {errors.email && <span>{errors.email.message}</span>}
+              {errors.username && <span>{errors.username.message}</span>}
 
               <label>Senha:</label>
               <input

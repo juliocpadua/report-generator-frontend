@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const ClientSchema = z.object({
   name: z.string(),
-  email: z.string(),
+  username: z.string(),
   password: z.string(),
   isAdm: z.boolean(),
   city: z.string(),

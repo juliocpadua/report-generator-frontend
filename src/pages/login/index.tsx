@@ -6,11 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// interface ILoginClient {
-//   email: string;
-//   password: string;
-// }
-
 const Login = () => {
   const { register, handleSubmit } = useForm();
 
@@ -32,7 +27,7 @@ const Login = () => {
       })
       .catch(() => {
         toast.dismiss();
-        return toast.error("Email e/ou senha incorretos.");
+        return toast.error("Usuário e/ou senha incorretos.");
       });
   };
 
@@ -42,8 +37,11 @@ const Login = () => {
       <img src={Logo} alt="logo" />
       <FormLogin onSubmit={handleSubmit(createSession)}>
         <div>
-          <label>Email:</label>
-          <input placeholder="Digite aqui o seu email" {...register("email")} />
+          <label>Usuário:</label>
+          <input
+            placeholder="Digite aqui o seu usuário"
+            {...register("username")}
+          />
         </div>
         <div>
           <label>Senha:</label>

@@ -1,7 +1,7 @@
 export interface IClient {
   id?: string;
   name: string;
-  email: string;
+  username: string;
   password: string;
   isAdm: boolean;
   city: string;
@@ -12,7 +12,7 @@ export interface IClient {
 }
 
 export interface ILogin {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -24,6 +24,9 @@ export interface IReportRequest {
   img?: string[];
   subject: string;
   client_id?: string;
+  table: string[];
+  title_table: string;
+  decription_table: string;
 }
 
 export interface IReportExibition {
@@ -42,7 +45,7 @@ export interface IReportPDFQuery {
 export interface IAdminRequest {
   name: string;
   id?: string;
-  email: string;
+  username: string;
   password: string;
   isAdm: boolean;
 }

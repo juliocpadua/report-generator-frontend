@@ -1,6 +1,79 @@
 import { styled } from "styled-components";
 
-export const SectionTable = styled.section``;
+export const SectionTable = styled.section`
+  max-width: 100%;
+  overflow-x: scroll;
+
+  &::-webkit-scrollbar {
+    height: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: var(--cornsilk);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--dark-moss-green);
+    border-radius: 20px;
+    border: 2px solid var(--dark-moss-green);
+    border-radius: 10px;
+    opacity: 0.5;
+  }
+
+  > button {
+    background-color: var(--pakistan-green);
+    color: var(--cornsilk);
+
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+
+    border: none;
+    outline: none;
+
+    padding-inline: 5px;
+    margin: 5px;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+  }
+`;
+
+export const AddTableButton = styled.button`
+  background-color: var(--tigers-eye);
+  color: var(--cornsilk);
+
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 1px;
+
+  border: none;
+  outline: none;
+
+  padding-inline: 5px;
+  margin: 5px;
+
+  border-radius: 3px;
+
+  cursor: pointer;
+`;
+
+export const InputTable = styled.input`
+  background-color: none;
+
+  border: 2px solid #000;
+  min-width: 60px;
+  width: 100px;
+
+  font-family: var(--font-main);
+  color: #000;
+  font-weight: 600;
+
+  border-radius: 0px;
+`;
 
 export const SectionTitlesTable = styled.section`
   display: flex;
@@ -12,15 +85,27 @@ export const SectionTitlesTable = styled.section`
   margin-bottom: 10px;
 
   .input-table {
-    width: 250px;
-    padding: 0px;
-    padding-inline: 5px;
+    width: 80%;
 
+    border: 1px solid var(--brown);
+    outline: none;
+
+    font-family: var(--font-main);
+    color: var(--brown);
     font-size: 14px;
+    font-weight: bold;
+
+    padding-inline: 10px;
+    border-radius: 5px;
+
+    box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+    -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+    -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
   }
 
   .desc {
     width: 300px;
+    height: 40px;
     font-size: 14px;
   }
 
@@ -42,18 +127,21 @@ export const FormReport = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: 10px;
 
-  height: 85vh;
+  min-height: 85vh;
+  height: auto;
   width: 95vw;
   margin-top: 3%;
+  padding-top: 10px;
+  padding-bottom: 15px;
 
   max-height: 90vh;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {
-    width: 3px;
+    width: 5px;
   }
 
   &::-webkit-scrollbar-track {
@@ -119,23 +207,35 @@ export const FormReport = styled.form`
 
     > input {
       width: 100%;
+
+      border: none;
+      outline: none;
+
       font-family: var(--font-main);
       color: var(--brown);
       font-size: 14px;
+      font-weight: bold;
+
+      padding: 10px;
+      border-radius: 5px;
+
+      box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
     }
 
     > textarea {
       max-width: 100%;
-      min-width: 350px;
+      width: 100%;
       min-height: 300px;
 
       @media (min-width: 824px) {
-        min-width: 100%;
+        width: 100%;
+        min-height: 250px;
       }
     }
 
-    > textarea,
-    input {
+    > textarea {
       border: none;
       outline: none;
 
