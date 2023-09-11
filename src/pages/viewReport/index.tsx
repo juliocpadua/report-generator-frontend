@@ -28,8 +28,8 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  //const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
-  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  //const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
