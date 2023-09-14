@@ -6,7 +6,6 @@ import {
   ContainerReportsPage,
   CreateNewActionSection,
   DialogClient,
-  DialogReport,
   FilterSection,
   GeneratePDF,
   ListReportsSection,
@@ -14,11 +13,7 @@ import {
 import dayjs from "dayjs";
 import { IoIosCreate } from "react-icons/io";
 import { useForm } from "react-hook-form";
-import {
-  IFunctionFilterReport,
-  IReportExibition,
-  IReportRequest,
-} from "../../interfaces";
+import { IFunctionFilterReport, IReportRequest } from "../../interfaces";
 import { GoTrash } from "react-icons/go";
 import { Header } from "../../components/header";
 import { DialogSection } from "../viewClients/styles";
@@ -28,18 +23,19 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
-  //const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+  //const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
+  const type = localStorage.getItem("type");
+  console.log();
 
   const [reports, setReports] = useState<IReportRequest[]>([]);
   const [filteredReports, setFilteredReports] = useState<IReportRequest[]>([]);
-  const [openReport, setOpenReport] = useState(false);
-  const [currentReport, setCurrentReport] = useState<IReportExibition>();
-  const [confirm, setConfirm] = useState(false);
+
+  // const [confirm, setConfirm] = useState(false);
   const [deleteClient, setDeleteClient] = useState(false);
 
   const [pdfUrl, setPdfUrl] = useState(basePdfUrl);
@@ -126,26 +122,26 @@ const ViewReportPage = () => {
     }
   };
 
-  const deleteReport = (id: string) => {
-    setConfirm(false);
+  // const deleteReport = (id: string) => {
+  //   setConfirm(false);
 
-    api
-      .delete(`/report/delete/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setOpenReport(false);
-        getReports();
-        toast.success("Relatório excluído com sucesso");
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("Não foi possível deletar esse relatório");
-      });
-  };
+  //   api
+  //     .delete(`/report/delete/${id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then((res) => {
+  //       console.log(res.data);
+  //       // setOpenReport(false);
+  //       getReports();
+  //       toast.success("Relatório excluído com sucesso");
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //       toast.error("Não foi possível deletar esse relatório");
+  //     });
+  // };
 
   return (
     <ContainerReportsPage>
@@ -189,51 +185,35 @@ const ViewReportPage = () => {
           ) : filteredReports.length > 0 ? (
             filteredReports.map((r: IReportRequest, i: number) => {
               return (
-                <li
-                  key={i}
-                  onClick={() => {
-                    setCurrentReport({
-                      title: r.title,
-                      subject: r.subject,
-                      generationDate: r.generationDate,
-                      description: r.description,
-                      img: r.img,
-                      id: r.id,
-                    });
-                    setOpenReport(!openReport);
-                  }}
+                <a
+                  href={`http://localhost:3000/report/pdf/unique/${r.id}`}
+                  target="blank"
                 >
-                  <div>
-                    <p>{r.title}</p>
-                    <p className="subject">{r.subject}</p>
-                  </div>
-                  <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
-                </li>
+                  <li key={i}>
+                    <div>
+                      <p>{r.title}</p>
+                      <p className="subject">{r.subject}</p>
+                    </div>
+                    <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
+                  </li>
+                </a>
               );
             })
           ) : (
             reports.map((r: IReportRequest, i: number) => {
               return (
-                <li
-                  key={i}
-                  onClick={() => {
-                    setCurrentReport({
-                      title: r.title,
-                      subject: r.subject,
-                      generationDate: r.generationDate,
-                      description: r.description,
-                      img: r.img,
-                      id: r.id,
-                    });
-                    setOpenReport(!openReport);
-                  }}
+                <a
+                  href={`http://localhost:3000/report/pdf/unique/${r.id}`}
+                  target="blank"
                 >
-                  <div>
-                    <p>{r.title}</p>
-                    <p className="subject">{r.subject}</p>
-                  </div>
-                  <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
-                </li>
+                  <li key={i}>
+                    <div>
+                      <p>{r.title}</p>
+                      <p className="subject">{r.subject}</p>
+                    </div>
+                    <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
+                  </li>
+                </a>
               );
             })
           )}
@@ -243,21 +223,23 @@ const ViewReportPage = () => {
         </GeneratePDF>
       </ListReportsSection>
 
-      <ActionsSection>
-        <CreateNewActionSection>
-          <h3>Novo Relatório</h3>
-          <span onClick={() => navigate(`/new-report/${client_id}`)}>
-            CRIAR <IoIosCreate />
-          </span>
-        </CreateNewActionSection>
+      {type == "admin" && (
+        <ActionsSection>
+          <CreateNewActionSection>
+            <h3>Novo Relatório</h3>
+            <span onClick={() => navigate(`/new-report/${client_id}`)}>
+              CRIAR <IoIosCreate />
+            </span>
+          </CreateNewActionSection>
 
-        <CreateNewActionSection>
-          <h3>Deletar cliente</h3>
-          <span onClick={() => setDeleteClient(true)} className="delete">
-            DELETAR <GoTrash />
-          </span>
-        </CreateNewActionSection>
-      </ActionsSection>
+          <CreateNewActionSection>
+            <h3>Deletar cliente</h3>
+            <span onClick={() => setDeleteClient(true)} className="delete">
+              DELETAR <GoTrash />
+            </span>
+          </CreateNewActionSection>
+        </ActionsSection>
+      )}
 
       {deleteClient && (
         <DialogSection>
@@ -273,7 +255,7 @@ const ViewReportPage = () => {
         </DialogSection>
       )}
 
-      {openReport && (
+      {/* {openReport && (
         <DialogSection>
           <DialogReport open>
             <p className="close" onClick={() => setOpenReport(false)}>
@@ -324,7 +306,7 @@ const ViewReportPage = () => {
             )}
           </DialogReport>
         </DialogSection>
-      )}
+      )} */}
     </ContainerReportsPage>
   );
 };

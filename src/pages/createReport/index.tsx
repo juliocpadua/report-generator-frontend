@@ -21,7 +21,6 @@ const CreateReportPage = () => {
     title: z.string().nonempty("Título obrigatório!"),
     subject: z.string().nonempty("Assunto obrigatório!"),
     description: z.string().nonempty("Descrição obrigatória!"),
-    photo: z.instanceof(FileList),
     generationDate: z.string().nonempty("Data necessária."),
   });
 
@@ -48,10 +47,20 @@ const CreateReportPage = () => {
   const [numRows, setNumRows] = useState(1);
   const [numCols, setNumCols] = useState(2);
 
+  const [images, setImages] = useState<any[]>([]);
+  console.log(images);
+  const [legends, setLegends] = useState<string[]>([]);
+  console.log(legends);
+  const [currentImage, setCurrentImage] = useState<File>();
+  console.log(currentImage);
+  const [currentLegend, setCurrentLegend] = useState("");
+
   const createNewReport = (data: any) => {
     toast.loading("Gerando relatório...");
 
     const dataForm = new FormData();
+
+    console.log(legends);
 
     const newData = {
       title: data.title,
@@ -62,12 +71,13 @@ const CreateReportPage = () => {
       table: tableData,
       title_table: titleTable,
       description_table: descriptionTable,
+      legends,
     };
 
     dataForm.append("data", JSON.stringify(newData));
 
-    for (let i = 0; i < data.photo.length; i++) {
-      dataForm.append("photo", data.photo[i]);
+    for (let i = 0; i < images.length; i++) {
+      dataForm.append("photo", images[i]);
     }
 
     api
@@ -146,11 +156,25 @@ const CreateReportPage = () => {
     );
   };
 
+  const orderImages = () => {
+    setImages([...images, currentImage]);
+    setLegends([...legends, currentLegend]);
+
+    setCurrentLegend("");
+
+    toast.success("Imagem e Legenda adicionadas.");
+  };
+
+  const handleImages = (e: any) => {
+    // setCurrentImage(URL.createObjectURL(e?.target?.files[0]));
+    return setCurrentImage(e?.target?.files[0]);
+  };
+
   return (
     <ContainerFormReport>
       <Header title="Criar Relatório" />
 
-      <ToastContainer />
+      <ToastContainer autoClose={2500} />
 
       <FormReport onSubmit={handleSubmit(createNewReport)}>
         <h2>RELATÓRIO</h2>
@@ -194,18 +218,33 @@ const CreateReportPage = () => {
         </div>
 
         <div>
-          <label>Imagens:</label>
+          <label>Imagem:</label>
           <input
             type="file"
             accept="image/jpeg, image/png, image/jpg"
-            multiple
-            {...register("photo")}
+            onChange={handleImages}
+            // multiple
+            // {...register("photo")}
           />
-          {errors.photo && <span>{errors.photo.message}</span>}
+          {/* {errors.photo && <span>{errors.photo.message}</span>} */}
+
+          <label>Legenda:</label>
+          <input
+            placeholder="Insira a legenda para a imagem..."
+            type="text"
+            value={currentLegend}
+            onChange={(e) => setCurrentLegend(e.target.value)}
+          />
+
+          <button type="button" onClick={orderImages}>
+            Inserir
+          </button>
         </div>
 
         <div>
-          <AddTableButton type="button" onClick={() => setContainTable(true)}>ADICIONAR TABELA +</AddTableButton>
+          <AddTableButton type="button" onClick={() => setContainTable(true)}>
+            ADICIONAR TABELA +
+          </AddTableButton>
           {containTable && (
             <SectionTable>
               <SectionTitlesTable>

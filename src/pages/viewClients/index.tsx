@@ -24,6 +24,9 @@ interface ICreateClient {
 }
 
 export const ViewClientsPage = () => {
+
+  const navigate = useNavigate();
+
   const ClientSchema = z.object({
     name: z.string().nonempty("Nome obrigadtório!"),
     username: z.string().nonempty("Usuário obrigadtório!"),
@@ -36,8 +39,6 @@ export const ViewClientsPage = () => {
   });
 
   type CreateUserFormData = z.infer<typeof ClientSchema>;
-
-  const navigate = useNavigate();
 
   const {
     register,

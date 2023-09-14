@@ -121,79 +121,82 @@ export const ListReportsSection = styled.section`
       border-radius: 10px;
       opacity: 0.5;
     }
+    > a {
+      text-decoration: none;
+      width: 100%;
+      > li {
+        width: 95%;
+        list-style: none;
 
-    > li {
-      width: 95%;
-      list-style: none;
+        text-align: start;
 
-      text-align: start;
+        background-color: transparent;
+        border: 1px solid var(--brown);
+        border-radius: 10px;
 
-      background-color: transparent;
-      border: 1px solid var(--brown);
-      border-radius: 10px;
+        box-sizing: border-box;
+        padding: 15px;
 
-      box-sizing: border-box;
-      padding: 15px;
+        font-family: var(--font-main);
+        color: var(--black);
+        font-weight: bold;
+        letter-spacing: 1px;
 
-      font-family: var(--font-main);
-      color: var(--black);
-      font-weight: bold;
-      letter-spacing: 1px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
 
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+        box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+        -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+        -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
 
-      box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-      -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-      -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-
-      > div {
-        width: auto;
-
-        @media (max-width: 824px) {
-          max-width: 200px;
-        }
-
-        > p {
-          font-family: var(--font-main);
-          color: var(--brown);
-          letter-spacing: 1px;
-          font-weight: bold;
-          font-size: 18px;
+        > div {
+          width: auto;
 
           @media (max-width: 824px) {
-            max-width: 180px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            max-width: 200px;
+          }
+
+          > p {
+            font-family: var(--font-main);
+            color: var(--brown);
+            letter-spacing: 1px;
+            font-weight: bold;
+            font-size: 18px;
+
+            @media (max-width: 824px) {
+              max-width: 180px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .subject {
+            font-family: var(--font-main);
+            color: var(--pakistan-green);
+            letter-spacing: 1px;
+
+            @media (max-width: 824px) {
+              max-width: 180px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
         }
 
-        .subject {
-          font-family: var(--font-main);
-          color: var(--pakistan-green);
-          letter-spacing: 1px;
-
-          @media (max-width: 824px) {
-            max-width: 180px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-          }
+        > span {
+          color: var(--tigers-eye);
         }
-      }
 
-      > span {
-        color: var(--tigers-eye);
-      }
+        > svg {
+          width: 30px;
+          height: 30px;
+        }
 
-      > svg {
-        width: 30px;
-        height: 30px;
+        cursor: pointer;
       }
-
-      cursor: pointer;
     }
   }
 `;
@@ -553,4 +556,6 @@ export const GeneratePDF = styled.a`
   border-radius: 5px;
 
   cursor: pointer;
+
+  margin-bottom: 5px;
 `;

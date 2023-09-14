@@ -75,7 +75,7 @@ export const ListOfClients = styled.ul`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      
+
       > span {
         color: var(--pakistan-green);
       }
@@ -106,13 +106,18 @@ export const CreateNewClientSection = styled.section`
     cursor: pointer;
 
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: 10px;
+
+    @media (max-width: 824px) {
+      font-size: 20px;
+    }
 
     > svg {
       color: var(--cornsilk);
       height: 30px;
-      width: 25px;
+      width: 30px;
+      margin-bottom: 6px;
     }
   }
 `;

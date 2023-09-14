@@ -22,6 +22,7 @@ export interface IReportRequest {
   generationDate: string;
   description: string;
   img?: string[];
+  legends?: string[];
   subject: string;
   client_id?: string;
   table: string[];
