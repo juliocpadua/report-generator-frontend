@@ -48,19 +48,14 @@ const CreateReportPage = () => {
   const [numCols, setNumCols] = useState(2);
 
   const [images, setImages] = useState<any[]>([]);
-  console.log(images);
   const [legends, setLegends] = useState<string[]>([]);
-  console.log(legends);
   const [currentImage, setCurrentImage] = useState<File>();
-  console.log(currentImage);
   const [currentLegend, setCurrentLegend] = useState("");
 
   const createNewReport = (data: any) => {
     toast.loading("Gerando relatório...");
 
     const dataForm = new FormData();
-
-    console.log(legends);
 
     const newData = {
       title: data.title,

@@ -23,20 +23,20 @@ import { BsFiletypePdf } from "react-icons/bs";
 const ViewReportPage = () => {
   const { client_id, client_name } = useParams();
 
-  //const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
-  const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
+  const basePdfUrl = `https://report-generator-dhbo.onrender.com/report/pdf/${client_id}`;
+  // const basePdfUrl = `http://localhost:3000/report/pdf/${client_id}`;
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
   const type = localStorage.getItem("type");
-  console.log();
 
   const [reports, setReports] = useState<IReportRequest[]>([]);
   const [filteredReports, setFilteredReports] = useState<IReportRequest[]>([]);
 
-  // const [confirm, setConfirm] = useState(false);
   const [deleteClient, setDeleteClient] = useState(false);
+  const [deleteReport, setDeleteReport] = useState(false);
+  const [currentReportId, sertCurrentReportId] = useState<string>("");
 
   const [pdfUrl, setPdfUrl] = useState(basePdfUrl);
 
@@ -122,26 +122,23 @@ const ViewReportPage = () => {
     }
   };
 
-  // const deleteReport = (id: string) => {
-  //   setConfirm(false);
-
-  //   api
-  //     .delete(`/report/delete/${id}`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       // setOpenReport(false);
-  //       getReports();
-  //       toast.success("Relatório excluído com sucesso");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //       toast.error("Não foi possível deletar esse relatório");
-  //     });
-  // };
+  const deleteReportFunction = (id: string) => {
+    api
+      .delete(`/report/delete/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(() => {
+        setDeleteReport(false);
+        getReports();
+        toast.success("Relatório excluído com sucesso");
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("Não foi possível deletar esse relatório");
+      });
+  };
 
   return (
     <ContainerReportsPage>
@@ -185,35 +182,53 @@ const ViewReportPage = () => {
           ) : filteredReports.length > 0 ? (
             filteredReports.map((r: IReportRequest, i: number) => {
               return (
-                <a
-                  href={`http://localhost:3000/report/pdf/unique/${r.id}`}
-                  target="blank"
-                >
-                  <li key={i}>
+                <li key={i}>
+                  <a
+                    href={`https://report-generator-dhbo.onrender.com//report/pdf/unique/${r.id}`}
+                    target="blank"
+                  >
                     <div>
                       <p>{r.title}</p>
                       <p className="subject">{r.subject}</p>
                     </div>
+                  </a>
+
+                  <section>
                     <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
-                  </li>
-                </a>
+                    <GoTrash
+                      onClick={() => {
+                        sertCurrentReportId(r.id!);
+                        setDeleteReport(true);
+                      }}
+                    />
+                  </section>
+                </li>
               );
             })
           ) : (
             reports.map((r: IReportRequest, i: number) => {
               return (
-                <a
-                  href={`http://localhost:3000/report/pdf/unique/${r.id}`}
-                  target="blank"
-                >
-                  <li key={i}>
+                <li key={i}>
+                  <a
+                    href={`https://report-generator-dhbo.onrender.com//report/pdf/unique/${r.id}`}
+                    target="blank"
+                  >
                     <div>
                       <p>{r.title}</p>
                       <p className="subject">{r.subject}</p>
                     </div>
+                  </a>
+
+                  <section>
                     <span>{dayjs(r.generationDate).format("DD/MM/YYYY")}</span>
-                  </li>
-                </a>
+                    <GoTrash
+                      onClick={() => {
+                        sertCurrentReportId(r.id!);
+                        setDeleteReport(true);
+                      }}
+                    />
+                  </section>
+                </li>
               );
             })
           )}
@@ -250,6 +265,23 @@ const ViewReportPage = () => {
                 SIM
               </span>
               <span onClick={() => setDeleteClient(false)}>NÃO</span>
+            </div>
+          </DialogClient>
+        </DialogSection>
+      )}
+
+      {deleteReport && (
+        <DialogSection>
+          <DialogClient open>
+            <p>Tem certeza que deseja excluir esse Relatório?</p>
+            <div>
+              <span
+                className="yes"
+                onClick={() => deleteReportFunction(currentReportId)}
+              >
+                SIM
+              </span>
+              <span onClick={() => setDeleteReport(false)}>NÃO</span>
             </div>
           </DialogClient>
         </DialogSection>

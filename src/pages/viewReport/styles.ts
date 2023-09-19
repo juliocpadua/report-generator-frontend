@@ -121,9 +121,7 @@ export const ListReportsSection = styled.section`
       border-radius: 10px;
       opacity: 0.5;
     }
-    > a {
-      text-decoration: none;
-      width: 100%;
+
       > li {
         width: 95%;
         list-style: none;
@@ -149,56 +147,70 @@ export const ListReportsSection = styled.section`
         box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
         -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
         -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-
-        > div {
-          width: auto;
-
-          @media (max-width: 824px) {
-            max-width: 200px;
-          }
-
-          > p {
-            font-family: var(--font-main);
-            color: var(--brown);
-            letter-spacing: 1px;
-            font-weight: bold;
-            font-size: 18px;
+        > a {
+          text-decoration: none;
+          width: 100%;
+          > div {
+            width: auto;
 
             @media (max-width: 824px) {
-              max-width: 180px;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
+              max-width: 200px;
+            }
+
+            > p {
+              font-family: var(--font-main);
+              color: var(--brown);
+              letter-spacing: 1px;
+              font-weight: bold;
+              font-size: 18px;
+
+              @media (max-width: 824px) {
+                max-width: 180px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+            }
+
+            .subject {
+              font-family: var(--font-main);
+              color: var(--pakistan-green);
+              letter-spacing: 1px;
+
+              @media (max-width: 824px) {
+                max-width: 180px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
             }
           }
+      }
 
-          .subject {
-            font-family: var(--font-main);
-            color: var(--pakistan-green);
-            letter-spacing: 1px;
-
-            @media (max-width: 824px) {
-              max-width: 180px;
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
+        > section {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-end;
+          gap: 5px;
+          > span {
+            color: var(--tigers-eye);
           }
-        }
 
-        > span {
-          color: var(--tigers-eye);
-        }
-
-        > svg {
-          width: 30px;
-          height: 30px;
+          > svg {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            background-color: #86180f;
+            color: var(--cornsilk);
+            padding: 3px;
+            border-radius: 15px;
+          }
         }
 
         cursor: pointer;
       }
     }
-  }
+  
 `;
 
 export const FilterSection = styled.section`
