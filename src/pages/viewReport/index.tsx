@@ -184,7 +184,7 @@ const ViewReportPage = () => {
               return (
                 <li key={i}>
                   <a
-                    href={`https://report-generator-dhbo.onrender.com//report/pdf/unique/${r.id}`}
+                    href={`https://report-generator-dhbo.onrender.com/report/pdf/unique/${r.id}`}
                     target="blank"
                   >
                     <div>
@@ -210,7 +210,7 @@ const ViewReportPage = () => {
               return (
                 <li key={i}>
                   <a
-                    href={`https://report-generator-dhbo.onrender.com//report/pdf/unique/${r.id}`}
+                    href={`https://report-generator-dhbo.onrender.com/report/pdf/unique/${r.id}`}
                     target="blank"
                   >
                     <div>
