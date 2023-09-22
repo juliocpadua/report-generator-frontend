@@ -257,3 +257,22 @@ export const FormReport = styled.form`
     }
   }
 `;
+
+export const ButtonInsertImage = styled.button`
+  font-family: var(--font-main);
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1px;
+
+  color: var(--cornsilk);
+  background-color: var(--pakistan-green);
+
+  width: 200px;
+  height: 20px;
+
+  border: none;
+  outline: 0;
+  border-radius: 5px;
+
+  margin-top: 10px;
+`;

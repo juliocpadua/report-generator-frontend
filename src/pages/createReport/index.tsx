@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { Header } from "../../components/header";
 import {
   AddTableButton,
+  ButtonInsertImage,
   ContainerFormReport,
   FormReport,
   InputTable,
@@ -231,9 +232,9 @@ const CreateReportPage = () => {
             onChange={(e) => setCurrentLegend(e.target.value)}
           />
 
-          <button type="button" onClick={orderImages}>
-            Inserir
-          </button>
+          <ButtonInsertImage type="button" onClick={orderImages}>
+            Inserir Imagem
+          </ButtonInsertImage>
         </div>
 
         <div>
