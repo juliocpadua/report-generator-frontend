@@ -32,6 +32,7 @@ const ViewReportPage = () => {
   const type = localStorage.getItem("type");
 
   const [reports, setReports] = useState<IReportRequest[]>([]);
+  console.log(reports.length);
   const [filteredReports, setFilteredReports] = useState<IReportRequest[]>([]);
 
   const [deleteClient, setDeleteClient] = useState(false);
@@ -233,9 +234,11 @@ const ViewReportPage = () => {
             })
           )}
         </ul>
-        <GeneratePDF href={pdfUrl} target="blank">
-          GERAR PDF <BsFiletypePdf />
-        </GeneratePDF>
+        {reports.length > 0 && (
+          <GeneratePDF href={pdfUrl} target="blank">
+            GERAR PDF <BsFiletypePdf />
+          </GeneratePDF>
+        )}
       </ListReportsSection>
 
       {type == "admin" && (

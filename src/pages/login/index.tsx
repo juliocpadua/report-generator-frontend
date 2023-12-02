@@ -10,7 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
-import { GiCoffeeBeans } from "react-icons/gi";
+import Logo2 from "../../assets/Logo2.png";
+import Trade from "../../assets/Trade.jpg";
 import { BiLogOut } from "react-icons/bi";
 
 const Login = () => {
@@ -94,69 +95,68 @@ const Login = () => {
 
   return (
     <ContainerLogin>
+      <img src={Trade} />
       <ToastContainer />
+      <main>
+        {type === "" && <img src={Logo2} />}
 
-      <h1>
-        Gerador <br /> De <GiCoffeeBeans />
-        <br /> Relatório
-      </h1>
+        {type === "" ? (
+          <ChoseTypeSection>
+            <p>Acesso de usuário:</p>
+            <button onClick={() => setType("client")}>Sou Cliente</button>
+            <button onClick={() => setType("admin")}>Sou Administrador</button>
+          </ChoseTypeSection>
+        ) : (
+          <BackButton onClick={() => setType("")}>
+            <BiLogOut />
+            VOLTAR
+          </BackButton>
+        )}
+        {type === "admin" && (
+          <FormLogin onSubmit={handleSubmit(createSession)}>
+            <h4>ADMINISTRADOR</h4>
 
-      {type === "" ? (
-        <ChoseTypeSection>
-          <p>Acesso de usuário:</p>
-          <button onClick={() => setType("client")}>Sou Cliente</button>
-          <button onClick={() => setType("admin")}>Sou Administrador</button>
-        </ChoseTypeSection>
-      ) : (
-        <BackButton onClick={() => setType("")}>
-          <BiLogOut />
-          VOLTAR
-        </BackButton>
-      )}
-      {type === "admin" && (
-        <FormLogin onSubmit={handleSubmit(createSession)}>
-          <h4>ADMINISTRADOR</h4>
+            <div>
+              <label>Usuário:</label>
+              <input
+                placeholder="Digite aqui o seu usuário"
+                {...register("username")}
+              />
+            </div>
+            <div>
+              <label>Senha:</label>
+              <input
+                type="password"
+                placeholder="Digite aqui a sua senha"
+                {...register("password")}
+              />
+            </div>
+            <button type="submit">Entrar</button>
+          </FormLogin>
+        )}
+        {type === "client" && (
+          <FormLogin onSubmit={handleSubmit(createSessionClient)}>
+            <h4>CLIENTE</h4>
 
-          <div>
-            <label>Usuário:</label>
-            <input
-              placeholder="Digite aqui o seu usuário"
-              {...register("username")}
-            />
-          </div>
-          <div>
-            <label>Senha:</label>
-            <input
-              type="password"
-              placeholder="Digite aqui a sua senha"
-              {...register("password")}
-            />
-          </div>
-          <button type="submit">Entrar</button>
-        </FormLogin>
-      )}
-      {type === "client" && (
-        <FormLogin onSubmit={handleSubmit(createSessionClient)}>
-          <h4>CLIENTE</h4>
-
-          <div>
-            <label>Usuário:</label>
-            <input
-              placeholder="Digite aqui o seu usuário"
-              {...register("username")}
-            />
-          </div>
-          <div>
-            <label>Senha:</label>
-            <input
-              type="password"
-              placeholder="Digite aqui a sua senha"
-              {...register("password")}
-            />
-          </div>
-          <button type="submit">Entrar</button>
-        </FormLogin>
-      )}
+            <div>
+              <label>Usuário:</label>
+              <input
+                placeholder="Digite aqui o seu usuário"
+                {...register("username")}
+              />
+            </div>
+            <div>
+              <label>Senha:</label>
+              <input
+                type="password"
+                placeholder="Digite aqui a sua senha"
+                {...register("password")}
+              />
+            </div>
+            <button type="submit">Entrar</button>
+          </FormLogin>
+        )}
+      </main>
     </ContainerLogin>
   );
 };

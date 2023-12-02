@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 
 export const BackButton = styled.button`
-  background-color: transparent;
-  color: var(--brown);
+  background-color: var(--tigers-eye);
+  color: var(--cornsilk);
 
   font-family: var(--font-main);
   font-weight: bold;
@@ -15,7 +15,7 @@ export const BackButton = styled.button`
   border-radius: 5px;
   padding: 2px;
 
-  width: 150px;
+  width: 130px;
 
   text-align: center;
 
@@ -39,6 +39,7 @@ export const ChoseTypeSection = styled.section`
   align-items: center;
 
   height: 30vh;
+  height: 30lvh;
 
   > p {
     font-family: var(--font-main);
@@ -69,25 +70,123 @@ export const ChoseTypeSection = styled.section`
 
 export const ContainerLogin = styled.div`
   min-height: 100vh;
+  min-height: 100lvh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10%;
 
-  > h1 {
-    font-family: var(--font-main);
-    font-weight: bold;
-    color: var(--cornsilk);
-    letter-spacing: 1px;
-    font-size: 32px;
+  @media (max-width: 824px) {
+    flex-direction: column;
+    justify-content: center;
 
-    color: var(--tigers-eye);
-    margin: 30px;
+    background-image: linear-gradient(
+      to bottom,
+      #283618,
+      #354320,
+      #425028,
+      #515e30,
+      #606c38
+    );
+  }
 
-    @media (min-width: 1024px) {
-      font-size: 3.5rem;
+  background-image: linear-gradient(
+    to left,
+    #283618,
+    #596243,
+    #8d9273,
+    #c5c4a8,
+    #fefae0
+  );
+
+  /* background-color: var(--pakistan-green); */
+
+  > img {
+    max-height: 100lvh;
+    max-height: 100vh;
+
+    @media (max-width: 824px) {
+      display: none;
     }
+  }
+
+  > main {
+    background-color: var(--cornsilk);
+    border-radius: 15px 0px 0px 15px;
+
+    margin-right: 200px;
+
+    max-height: 90lvh;
+    max-height: 90vh;
+    overflow-y: scroll;
+
+    height: 90lvh;
+    height: 90vh;
+    width: 450px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--cornsilk);
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--pakistan-green);
+      border-radius: 20px;
+      border: 2px solid var(--pakistan-green);
+      border-radius: 10px;
+      opacity: 0.5;
+    }
+
+    @media (min-width: 824px) {
+    }
+
+    @media (max-width: 824px) {
+      max-width: 95%;
+      width: 95%;
+      height: 90lvh;
+      margin-right: 0px;
+    }
+
+    > img {
+      border-radius: 10px;
+
+      width: 400px;
+      height: 450px;
+
+      @media (max-width: 824px) {
+        max-width: 100%;
+      }
+    }
+    /* > h1 {
+      font-family: var(--font-main);
+      font-weight: bold;
+      color: var(--pakistan-green);
+      letter-spacing: 1px;
+      font-size: 42px;
+
+      margin: 30px;
+
+      text-align: center;
+
+      > svg {
+        color: var(--tigers-eye);
+      }
+
+      @media (min-width: 1024px) {
+        font-size: 3.5rem;
+      }
+    } */
   }
 `;
 
@@ -99,10 +198,10 @@ export const FormLogin = styled.form`
   gap: 40px;
 
   min-height: 50vh;
-  width: 70%;
+  width: 90%;
 
   @media (min-width: 824px) {
-    width: 25%;
+    /* width: 25%; */
   }
 
   padding: 20px;

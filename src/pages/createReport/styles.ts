@@ -131,6 +131,7 @@ export const FormReport = styled.form`
   gap: 10px;
 
   min-height: 85vh;
+  min-height: 85lvh;
   height: auto;
   width: 95vw;
   margin-top: 3%;
@@ -138,6 +139,7 @@ export const FormReport = styled.form`
   padding-bottom: 15px;
 
   max-height: 90vh;
+  max-height: 90lvh;
   overflow-y: scroll;
 
   &::-webkit-scrollbar {

@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const ContainerReportsPage = styled.div`
   min-height: 100vh;
+  min-height: 100lvh;
   min-width: 100vw;
 
   display: flex;
@@ -104,6 +105,7 @@ export const ListReportsSection = styled.section`
     gap: 35px;
 
     max-height: 40vh;
+    max-height: 40lvh;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {
@@ -292,6 +294,7 @@ export const DialogReport = styled.dialog`
   @media (min-width: 824px) {
     width: 55vw;
     height: 95vh;
+    height: 95lvh;
     justify-content: space-between;
     inset-inline-start: 22%;
   }
@@ -301,6 +304,7 @@ export const DialogReport = styled.dialog`
   min-height: 85vh;
   height: auto;
   max-height: 98vh;
+  max-height: 98lvh;
   overflow-y: scroll;
   padding: 10px;
 
