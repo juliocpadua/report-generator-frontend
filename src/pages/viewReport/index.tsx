@@ -288,59 +288,6 @@ const ViewReportPage = () => {
           </DialogClient>
         </DialogSection>
       )}
-
-      {/* {openReport && (
-        <DialogSection>
-          <DialogReport open>
-            <p className="close" onClick={() => setOpenReport(false)}>
-              X
-            </p>
-
-            <section>
-              <h3>PIMENTA E TAVEIRA</h3>
-              <p className="subtitle-2">
-                Consultoria Agronômica e Assistência Técnica Especializada em
-                Cafeicultura
-              </p>
-              <p className="subtitle">RELATÓRIO DE VISITA</p>
-            </section>
-
-            <section>
-              <h2 className="title">{currentReport!.title}</h2>
-              <p className="date">
-                {dayjs(currentReport!.generationDate).format("DD/MM/YYYY")}
-              </p>
-              <span className="subject">{currentReport!.subject}</span>
-              <p className="description">{currentReport!.description}</p>
-
-              <div>
-                {currentReport!.img?.map((url: string, i: number) => {
-                  return <img key={i} src={url} />;
-                })}
-              </div>
-            </section>
-
-            <p className="exclude-report" onClick={() => setConfirm(true)}>
-              EXCLUIR RELATÓRIO <GoTrash />
-            </p>
-
-            {confirm && (
-              <dialog open>
-                <p>Tem certeza que deseja excluir esse relatório?</p>
-                <div>
-                  <span
-                    className="yes"
-                    onClick={() => deleteReport(currentReport!.id!)}
-                  >
-                    SIM
-                  </span>
-                  <span onClick={() => setConfirm(false)}>NÃO</span>
-                </div>
-              </dialog>
-            )}
-          </DialogReport>
-        </DialogSection>
-      )} */}
     </ContainerReportsPage>
   );
 };

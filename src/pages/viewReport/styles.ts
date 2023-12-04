@@ -19,6 +19,7 @@ export const ActionsSection = styled.section`
   gap: 20px;
 
   margin-bottom: 10px;
+  margin-top: 100px;
 `;
 
 export const CreateNewActionSection = styled.section`
@@ -77,6 +78,8 @@ export const ListReportsSection = styled.section`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+
+  margin-top: 50px;
 
   > h2 {
     font-family: var(--font-main);
@@ -217,7 +220,7 @@ export const ListReportsSection = styled.section`
 
 export const FilterSection = styled.section`
   height: auto;
-  width: 100vw;
+  width: 98vw;
 
   display: flex;
   flex-direction: column;
@@ -228,7 +231,7 @@ export const FilterSection = styled.section`
     align-items: center;
     flex-direction: column;
     padding-inline: 20px;
-    width: 100%;
+    max-width: 95%;
     gap: 20px;
 
     @media (min-width: 824px) {
