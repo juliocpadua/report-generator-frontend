@@ -205,7 +205,7 @@ const CreateReportPage = () => {
         </div>
 
         <div>
-          <label>Description:</label>
+          <label>Descrição:</label>
           <textarea
             placeholder="Descreva aqui o relatório..."
             {...register("description")}
