@@ -32,7 +32,6 @@ const ViewReportPage = () => {
   const type = localStorage.getItem("type");
 
   const [reports, setReports] = useState<IReportRequest[]>([]);
-  console.log(reports.length);
   const [filteredReports, setFilteredReports] = useState<IReportRequest[]>([]);
 
   const [deleteClient, setDeleteClient] = useState(false);
@@ -236,7 +235,7 @@ const ViewReportPage = () => {
         </ul>
         {reports.length > 0 && (
           <GeneratePDF href={pdfUrl} target="blank">
-            GERAR PDF <BsFiletypePdf />
+            GERAR PDF DOS RELATÓRIOS SELECIONADOS <BsFiletypePdf />
           </GeneratePDF>
         )}
       </ListReportsSection>
@@ -244,16 +243,16 @@ const ViewReportPage = () => {
       {type == "admin" && (
         <ActionsSection>
           <CreateNewActionSection>
-            <h3>Novo Relatório</h3>
+            {/* <h3>Novo Relatório</h3> */}
             <span onClick={() => navigate(`/new-report/${client_id}`)}>
-              CRIAR <IoIosCreate />
+              CRIAR NOVO RELATÓRIO <IoIosCreate />
             </span>
           </CreateNewActionSection>
 
           <CreateNewActionSection>
-            <h3>Deletar cliente</h3>
+            {/* <h3>Deletar cliente</h3> */}
             <span onClick={() => setDeleteClient(true)} className="delete">
-              DELETAR <GoTrash />
+              DELETAR ESSE CLIENTE  <GoTrash />
             </span>
           </CreateNewActionSection>
         </ActionsSection>

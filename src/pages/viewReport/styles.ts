@@ -55,7 +55,7 @@ export const CreateNewActionSection = styled.section`
 
     cursor: pointer;
 
-    width: 120px;
+    width: 90%;
 
     > svg {
       width: 25px;
@@ -76,6 +76,7 @@ export const ListReportsSection = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 
   > h2 {
     font-family: var(--font-main);
@@ -95,9 +96,9 @@ export const ListReportsSection = styled.section`
 
   > ul {
     min-height: 100%;
-    min-width: 95%;
+    min-width: 100%;
 
-    padding: 10px;
+    padding: 5px;
 
     display: flex;
     flex-direction: column;
@@ -124,95 +125,94 @@ export const ListReportsSection = styled.section`
       opacity: 0.5;
     }
 
-      > li {
-        width: 95%;
-        list-style: none;
+    > li {
+      width: 95%;
+      list-style: none;
 
-        text-align: start;
+      text-align: start;
 
-        background-color: transparent;
-        border: 1px solid var(--brown);
-        border-radius: 10px;
+      background-color: transparent;
+      border: 1px solid var(--brown);
+      border-radius: 10px;
 
-        box-sizing: border-box;
-        padding: 15px;
+      box-sizing: border-box;
+      padding: 15px;
 
-        font-family: var(--font-main);
-        color: var(--black);
-        font-weight: bold;
-        letter-spacing: 1px;
+      font-family: var(--font-main);
+      color: var(--black);
+      font-weight: bold;
+      letter-spacing: 1px;
 
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
-        box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-        -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-        -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
-        > a {
-          text-decoration: none;
-          width: 100%;
-          > div {
-            width: auto;
+      box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
+      > a {
+        text-decoration: none;
+        width: 100%;
+        > div {
+          width: auto;
+
+          @media (max-width: 824px) {
+            max-width: 200px;
+          }
+
+          > p {
+            font-family: var(--font-main);
+            color: var(--brown);
+            letter-spacing: 1px;
+            font-weight: bold;
+            font-size: 18px;
 
             @media (max-width: 824px) {
-              max-width: 200px;
-            }
-
-            > p {
-              font-family: var(--font-main);
-              color: var(--brown);
-              letter-spacing: 1px;
-              font-weight: bold;
-              font-size: 18px;
-
-              @media (max-width: 824px) {
-                max-width: 180px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-            }
-
-            .subject {
-              font-family: var(--font-main);
-              color: var(--pakistan-green);
-              letter-spacing: 1px;
-
-              @media (max-width: 824px) {
-                max-width: 180px;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
+              max-width: 180px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
             }
           }
-      }
 
-        > section {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          gap: 5px;
-          > span {
-            color: var(--tigers-eye);
-          }
+          .subject {
+            font-family: var(--font-main);
+            color: var(--dark-moss-green);
+            letter-spacing: 1px;
 
-          > svg {
-            width: 30px;
-            height: 30px;
-            cursor: pointer;
-            background-color: #86180f;
-            color: var(--cornsilk);
-            padding: 3px;
-            border-radius: 15px;
+            @media (max-width: 824px) {
+              max-width: 180px;
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
           }
         }
-
-        cursor: pointer;
       }
+
+      > section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+        > span {
+          color: var(--tigers-eye);
+        }
+
+        > svg {
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+          background-color: #86180f;
+          color: var(--cornsilk);
+          padding: 3px;
+          border-radius: 15px;
+        }
+      }
+
+      cursor: pointer;
     }
-  
+  }
 `;
 
 export const FilterSection = styled.section`
@@ -302,6 +302,7 @@ export const DialogReport = styled.dialog`
   position: fixed;
   width: 92vw;
   min-height: 85vh;
+  min-height: 85lvh;
   height: auto;
   max-height: 98vh;
   max-height: 98lvh;
@@ -557,13 +558,14 @@ export const GeneratePDF = styled.a`
   text-decoration: none;
 
   font-family: var(--font-main);
-  font-size: 20px;
+  font-size: 12px;
   font-weight: bold;
   letter-spacing: 1px;
 
   text-align: center;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 7px;
 
   background-color: var(--dark-moss-green);
@@ -574,4 +576,11 @@ export const GeneratePDF = styled.a`
   cursor: pointer;
 
   margin-bottom: 5px;
+
+  width: 90%;
+
+  > svg {
+    width: 25px;
+    height: 30px;
+  }
 `;

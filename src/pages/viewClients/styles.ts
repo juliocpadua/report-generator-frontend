@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const ContainerClientsPage = styled.div`
   min-height: 100vh;
+  min-height: 100lvh;
   min-width: 100vw;
 
   display: flex;
@@ -11,8 +12,9 @@ export const ContainerClientsPage = styled.div`
 `;
 
 export const ListOfClients = styled.ul`
-  height: 65vh;
+  height: 65lvh;
   max-height: 65vh;
+  max-height: 65lvh;
   width: 95vw;
 
   overflow-y: scroll;
@@ -87,6 +89,7 @@ export const ListOfClients = styled.ul`
 
 export const CreateNewClientSection = styled.section`
   height: 5vh;
+  height: 5lvh;
   min-width: 100vw;
 
   display: flex;
@@ -110,7 +113,7 @@ export const CreateNewClientSection = styled.section`
     gap: 10px;
 
     @media (max-width: 824px) {
-      font-size: 20px;
+      font-size: 18px;
     }
 
     > svg {
@@ -126,6 +129,7 @@ export const DialogSection = styled.section`
   background-color: rgba(0, 0, 0, 0.2);
 
   min-height: 100vh;
+  min-height: 100lvh;
   min-width: 100vw;
 
   position: absolute;
@@ -136,9 +140,10 @@ export const DialogSection = styled.section`
 `;
 
 export const Dialog = styled.dialog`
-  position: fixed;
-  min-width: 85vw;
+  /* position: fixed; */
+  min-width: 100vw;
   min-height: 50vh;
+  min-height: 50lvh;
   height: auto;
   padding-top: 5px;
 
@@ -154,7 +159,7 @@ export const Dialog = styled.dialog`
   -webkit-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
   -moz-box-shadow: -1px -1px 14px -5px rgba(67, 40, 24, 0.75);
 
-  inset-inline-start: 7.5%;
+  /* inset-inline-start: 7.5%; */
 
   > h3 {
     font-family: var(--font-main);
@@ -190,6 +195,7 @@ export const Dialog = styled.dialog`
     min-width: 100%;
 
     max-height: 85vh;
+    max-height: 85lvh;
     overflow-y: scroll;
 
     &::-webkit-scrollbar {

@@ -117,12 +117,12 @@ export const ContainerLogin = styled.div`
 
     margin-right: 200px;
 
-    max-height: 90lvh;
     max-height: 90vh;
+    max-height: 90lvh;
     overflow-y: scroll;
-
-    height: 90lvh;
+    
     height: 90vh;
+    height: 90lvh;
     width: 450px;
 
     display: flex;
@@ -198,6 +198,7 @@ export const FormLogin = styled.form`
   gap: 40px;
 
   min-height: 50vh;
+  min-height: 50lvh;
   width: 90%;
 
   @media (min-width: 824px) {
